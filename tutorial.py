@@ -8,8 +8,7 @@ current_milli_time = lambda: int(round(time.time() * 1000))
 # cap = cv2.VideoCapture(0)
 # webcam externe sur le port 1
 cap_cam = cv2.VideoCapture(1)
-
-cap_cam.set(cv2.CAP_PROP_BUFFERSIZE, 3)
+# cap_cam.set(cv2.CAP_PROP_BUFFERSIZE, 3)
 
 if not cap_cam.isOpened():
     print('Cannot open camera')
@@ -25,6 +24,8 @@ if not ret:
 filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
 
 cap_vid = cv2.VideoCapture(filename)
+# cap_vid.set(cv2.CAP_PROP_BUFFERSIZE, 3)
+
 if not cap_cam.isOpened():
     print('Cannot open video: ' + filename)
     cap_cam.release()
@@ -37,7 +38,7 @@ if not ret:
     exit()
 
 # Specify maximum video time in milliseconds
-max_time = 1000 * cap_vid.get(cv2.CAP_PROP_FRAME_COUNT) / cap_vid.get(cv2.CAP_PROP_FPS)
+# max_time = 1000 * cap_vid.get(cv2.CAP_PROP_FRAME_COUNT) / cap_vid.get(cv2.CAP_PROP_FPS)
 
 # Resize the camera frame to the size of the video
 height = int(cap_vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -55,18 +56,18 @@ while True:
     frame_cam = cv2.resize(frame_cam, (width, height), interpolation = cv2.INTER_AREA)
 
     # Capture the frame at the current time point
-    time_passed = current_milli_time() - start
-    if time_passed > max_time:
-        print('Video time exceeded. Quitting...')
-        break
-    ret = cap_vid.set(cv2.CAP_PROP_POS_MSEC, time_passed)
-    if not ret:
-        print('An error occured while setting video time')
-        break
+    # time_passed = current_milli_time() - start
+    # if time_passed > max_time:
+    #     print('Video time exceeded. Quitting...')
+    #     break
+    # ret = cap_vid.set(cv2.CAP_PROP_POS_MSEC, time_passed)
+    # if not ret:
+    #     print('An error occured while setting video time')
+    #     break
     ret, frame_vid = cap_vid.read()
-    if not ret:
-        print('Cannot read from video stream')
-        break
+    # if not ret:
+    #     print('Cannot read from video stream')
+    #     break
 
     # Blend the two images and show the result
     tr = 0.3 # transparency between 0-1, show camera if 0
@@ -74,6 +75,7 @@ while True:
     cv2.imshow('Transparent result', frame)
     if cv2.waitKey(1) == 27: # ESC is pressed
         break
+
 
 cap_cam.release()
 cap_vid.release()
