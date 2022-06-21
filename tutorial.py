@@ -20,8 +20,9 @@ if not ret:
     exit()
 
 # Video feed
-# filename = 'assets/video.mov'
-filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+filename = 'assets/video.mov'
+# filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+# filename = 'assets/Triangle_VJ_Background_Loop.mp4'
 
 cap_vid = cv2.VideoCapture(filename)
 # cap_vid.set(cv2.CAP_PROP_BUFFERSIZE, 3)
@@ -31,14 +32,12 @@ if not cap_cam.isOpened():
     cap_cam.release()
     exit()
 ret, frame_vid = cap_vid.read()
+
 if not ret:
     print('Cannot open video stream: ' + filename)
     cap_cam.release()
     cap_vid.release()
     exit()
-
-# Specify maximum video time in milliseconds
-# max_time = 1000 * cap_vid.get(cv2.CAP_PROP_FRAME_COUNT) / cap_vid.get(cv2.CAP_PROP_FPS)
 
 # Resize the camera frame to the size of the video
 height = int(cap_vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -55,26 +54,65 @@ while True:
         break
     frame_cam = cv2.resize(frame_cam, (width, height), interpolation = cv2.INTER_AREA)
 
-    # Capture the frame at the current time point
-    # time_passed = current_milli_time() - start
-    # if time_passed > max_time:
-    #     print('Video time exceeded. Quitting...')
-    #     break
-    # ret = cap_vid.set(cv2.CAP_PROP_POS_MSEC, time_passed)
-    # if not ret:
-    #     print('An error occured while setting video time')
-    #     break
+    if not cap_vid:
+        cap_cam = cv2.VideoCapture(1)
+        print(cap_vid)
+        break
+
     ret, frame_vid = cap_vid.read()
-    # if not ret:
-    #     print('Cannot read from video stream')
-    #     break
+    print(cap_vid.read())
+
 
     # Blend the two images and show the result
     tr = 0.3 # transparency between 0-1, show camera if 0
-    frame = ((1-tr) * frame_cam.astype(np.float64) + tr * frame_vid.astype(np.float64)).astype(np.uint8)
-    cv2.imshow('Transparent result', frame)
+    if frame_vid is not None:
+        frame = ((1-tr) * frame_cam.astype(np.float64) + tr * frame_vid.astype(np.float64)).astype(np.uint8)
+        cv2.imshow('Transparent result', frame)
+
+    if frame_vid is  None:
+        cap_vid = cv2.VideoCapture(filename)
+        ret, frame_vid = cap_vid.read()
+    
     if cv2.waitKey(1) == 27: # ESC is pressed
         break
+
+
+
+#     # Find OpenCV version
+#     (major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')
+
+#     # With webcam get(CV_CAP_PROP_FPS) does not work.
+#     # Let's see for ourselves.
+
+#     if int(major_ver)  < 3 :
+#         fps = cap_vid.get(cv2.CAP_PROP_FPS)
+#         print("Frames per second using video.get(cv2.cv.CV_CAP_PROP_FPS): {0}".format(fps))
+#     else :
+#         fps = cap_vid.get(cv2.CAP_PROP_FPS)
+#         print("Frames per second using video.get(cv2.CAP_PROP_FPS) : {0}".format(fps))
+
+#     # Number of frames to capture
+#     num_frames = 120
+
+#     print("Capturing {0} frames".format(num_frames))
+
+#     # Start time
+#     start = time.time()
+
+#     # Grab a few frames
+#     for i in range(0, num_frames) :
+#         ret, frame = cap_vid.read()
+
+#     # End time
+#     end = time.time()
+
+#     # Time elapsed
+#     seconds = end - start
+#     print ("Time taken : {0} seconds".format(seconds))
+
+#     # Calculate frames per second
+#     fps  = num_frames / seconds
+#     print("Estimated frames per second : {0}".format(fps))
 
 
 cap_cam.release()
