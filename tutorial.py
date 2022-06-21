@@ -21,9 +21,9 @@ if not ret:
 
 # Video feed
 # filename = 'assets/video.mov'
-# filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
 # filename = 'assets/Triangle_VJ_Background_Loop.mp4'
-filename = 'assets/rendu2.mov'
+# filename = 'assets/rendu2.mov'
 
 
 cap_vid = cv2.VideoCapture(filename)
@@ -42,8 +42,16 @@ if not ret:
     exit()
 
 # Resize the camera frame to the size of the video
-height = int(cap_vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
-width = int(cap_vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+# height = int(cap_vid.get(cv2.CAP_PROP_FRAME_HEIGHT))
+# width = int(cap_vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+
+height = int(1080.0)
+width = int(1920.0)
+
+# print(cap_vid.get(cv2.CAP_PROP_FRAME_WIDTH))
+# 1080.0
+# print('width : ' . width) 
+# 1920.0
 
 # Starting from now, syncronize the videos
 start = current_milli_time()
@@ -64,10 +72,10 @@ while True:
     ret, frame_vid = cap_vid.read()
     print(cap_vid.read())
 
-
     # Blend the two images and show the result
-    tr = 0 # transparency between 0-1, show camera if 0
+    tr = 0.3 # transparency between 0-1, show camera if 0
     if frame_vid is not None:
+        frame_vid = cv2.resize(frame_vid, (width, height))
         frame = ((1-tr) * frame_cam.astype(np.float64) + tr * frame_vid.astype(np.float64)).astype(np.uint8)
         cv2.imshow('Transparent result', frame)
     else:
