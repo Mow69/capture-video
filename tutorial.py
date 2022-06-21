@@ -20,9 +20,11 @@ if not ret:
     exit()
 
 # Video feed
-filename = 'assets/video.mov'
+# filename = 'assets/video.mov'
 # filename = 'assets/1104Z_stktunnelmotionstriangledesign_1.mov'
 # filename = 'assets/Triangle_VJ_Background_Loop.mp4'
+filename = 'assets/rendu2.mov'
+
 
 cap_vid = cv2.VideoCapture(filename)
 # cap_vid.set(cv2.CAP_PROP_BUFFERSIZE, 3)
@@ -64,12 +66,11 @@ while True:
 
 
     # Blend the two images and show the result
-    tr = 0.3 # transparency between 0-1, show camera if 0
+    tr = 0 # transparency between 0-1, show camera if 0
     if frame_vid is not None:
         frame = ((1-tr) * frame_cam.astype(np.float64) + tr * frame_vid.astype(np.float64)).astype(np.uint8)
         cv2.imshow('Transparent result', frame)
-
-    if frame_vid is  None:
+    else:
         cap_vid = cv2.VideoCapture(filename)
         ret, frame_vid = cap_vid.read()
     
