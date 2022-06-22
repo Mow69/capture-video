@@ -2,9 +2,9 @@
 import cv2
 
 
-def init_live():
+def init_live(CAMERA_PORT):
     # Live camera feed
-    cap_live = cv2.VideoCapture(2)
+    cap_live = cv2.VideoCapture(CAMERA_PORT)
 
     if not cap_live.isOpened():
         print('Cannot open live camera')
@@ -40,7 +40,7 @@ def reload_filter(filter_path,last_cap_filter):
         new_cap_filter = cv2.VideoCapture(filter_path) #ret, frame_filter
         ret, frame_filter = new_cap_filter.read()
         return ret, frame_filter, new_cap_filter
-    except print(0):
+    except:
         print('Cannot reload the video filter ' + filter_path)
         exit()
         
