@@ -8,12 +8,13 @@ import initDevice as initDevice
 
 # CONST
 CAMERA_PORT = 2
-FILTER_PATH ='./assets/filter1.mp4'
+FILTER_PATH ='./assets/Triangle_VJ_Background_Loop.mp4'
 RESIZE_WIDTH = 400
 RESIZE_HEIGHT = 400
 
 # Var
 frame_filter_nb = 2
+frame_filter_pause = False
 
 ret, cap_live = initDevice.init_live(CAMERA_PORT)
 ret, cap_filter = initDevice.init_filter(FILTER_PATH)
@@ -28,12 +29,12 @@ while True:
         break
     frame_live = cv2.resize(frame_live, (RESIZE_WIDTH, RESIZE_HEIGHT), interpolation = cv2.INTER_AREA)
 
+    if not frame_filter_pause:
+        for i in range(frame_filter_nb):
+            ret, frame_filter = cap_filter.read()
     
-    for i in range(frame_filter_nb):
-        ret, frame_filter = cap_filter.read()
-    
-    if ret == False:
-        ret, frame_filter, cap_filter = initDevice.reload_filter(FILTER_PATH,cap_filter) #reload filter video and remove cache
+    if ret == False: #reload filter video and remove cache
+        ret, frame_filter, cap_filter = initDevice.reload_filter(FILTER_PATH,cap_filter) 
         
     frame_filter = cv2.resize(frame_filter, (RESIZE_WIDTH, RESIZE_HEIGHT))
     
@@ -41,12 +42,10 @@ while True:
         print('Cannot read from video stream')
         break
 
-
     #################################
     # if foreground array is not empty which
     # means actual video is still going on
     if ret:
-       
         # creating the alpha mask
         alpha = np.zeros_like(frame_filter)
         gray = cv2.cvtColor(frame_filter, cv2.COLOR_BGR2GRAY)
@@ -64,47 +63,35 @@ while True:
  
         # multiplying the foreground
         # with alpha matte
-        foreground = cv2.multiply(alpha,
-                                  foreground)
+        foreground = cv2.multiply(alpha,foreground)
  
         # multiplying the background
         # with (1 - alpha)
-        background = cv2.multiply(1.0 - alpha,
-                                  background)
+        background = cv2.multiply(1.0 - alpha,background)
  
         # adding the masked foreground
         # and background together
-        outImage = cv2.add(foreground,
-                           background)
+        outImage = cv2.add(foreground,background)
  
         # resizing the masked output
         ims = cv2.resize(outImage, (RESIZE_WIDTH, RESIZE_HEIGHT))
  
         # showing the masked output video
         cv2.imshow('Blended', ims/255)
- 
-        # if the user presses 'q' then the
-        # program breaks from while loop
-    #################################
-
-
-    # Blend the two images and show the result
-    # tr = 0.3; # transparency between 0-1, show camera if 0
-    # frame = ((1-tr) * frame_live.astype(np.double) + tr * frame_filter.astype(np.double)).astype(np.uint8)
-    # cv2.imshow('Transparent result', frame)
-
 
     # KeyPress
     key_press = cv2.waitKeyEx(1)
     if key_press == 27: # exit if ESC is pressed
         break
-    if key_press == 2490368: # exit if up-arrow is pressed
+    if key_press == 2490368: # speed up if up-arrow is pressed
         if frame_filter_nb < 5:
             frame_filter_nb += 1
         print(frame_filter_nb)  
-    if key_press == 2621440: # exit if down-arrow is pressed
+    if key_press == 2621440: # speed down if down-arrow is pressed
         if frame_filter_nb > 0:
             frame_filter_nb -= 1
         print(frame_filter_nb)
+    if key_press == 32: # pause if down-arrow is pressed
+        frame_filter_pause = not frame_filter_pause
 
 initDevice.close_all(cap_live,cap_filter)
