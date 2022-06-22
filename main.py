@@ -7,27 +7,22 @@ import numpy as np
 import initDevice as initDevice
 
 # CONST
-#filter_path = './img/filter1.mp4'
-CAMERA_PORT = 0
-FILTER_PATH ='./assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+CAMERA_PORT = 2
+FILTER_PATH ='./assets/filter1.mp4'
 RESIZE_WIDTH = 400
 RESIZE_HEIGHT = 400
 
 # Var
-frame_filter_nb = 5
-
-# Main
+frame_filter_nb = 2
 
 ret, cap_live = initDevice.init_live(CAMERA_PORT)
 ret, cap_filter = initDevice.init_filter(FILTER_PATH)
 
+# Main
 while True:
     # Capture the next frame from camera
     ret, frame_live = cap_live.read()
 
-    
-    #fps = cap_live.get(cv2.CAP_PROP_FPS)
-    #print("Frames per second using cap_live: {0}".format(fps))
     if not ret:
         print('Cannot receive frame from camera')
         break
@@ -53,15 +48,16 @@ while True:
     cv2.imshow('Transparent result', frame)
 
 
+    # KeyPress
     key_press = cv2.waitKeyEx(1)
     if key_press == 27: # exit if ESC is pressed
         break
     if key_press == 2490368: # exit if up-arrow is pressed
-        if frame_filter_nb < 10:
+        if frame_filter_nb < 5:
             frame_filter_nb += 1
         print(frame_filter_nb)  
     if key_press == 2621440: # exit if down-arrow is pressed
-        if frame_filter_nb > 00:
+        if frame_filter_nb > 0:
             frame_filter_nb -= 1
         print(frame_filter_nb)
 
