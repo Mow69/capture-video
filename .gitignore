@@ -1,0 +1,13 @@
+
+# Folder
+assets/*
+
+# Python
+__pycache__
+
+# IDE
+/.idea
+.vscode
+http-request.http
+schema.graphql
+.graphqlconfig
