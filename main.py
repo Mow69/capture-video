@@ -8,17 +8,18 @@ import initDevice as initDevice
 
 # CONST
 #filter_path = './img/filter1.mp4'
-filter_path='./assets/bibi.mp4'
-resize_width = 400
-resize_height = 400
+CAMERA_PORT = 0
+FILTER_PATH ='./assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+RESIZE_WIDTH = 400
+RESIZE_HEIGHT = 400
 
 # Var
 frame_filter_nb = 5
 
 # Main
 
-ret, cap_live = initDevice.init_live()
-ret, cap_filter = initDevice.init_filter(filter_path)
+ret, cap_live = initDevice.init_live(CAMERA_PORT)
+ret, cap_filter = initDevice.init_filter(FILTER_PATH)
 
 while True:
     # Capture the next frame from camera
@@ -30,21 +31,21 @@ while True:
     if not ret:
         print('Cannot receive frame from camera')
         break
-    frame_live = cv2.resize(frame_live, (resize_width, resize_height), interpolation = cv2.INTER_AREA)
+    frame_live = cv2.resize(frame_live, (RESIZE_WIDTH, RESIZE_HEIGHT), interpolation = cv2.INTER_AREA)
 
     
     for i in range(frame_filter_nb):
         ret, frame_filter = cap_filter.read()
     
     if ret == False:
-        ret, frame_filter, cap_filter = initDevice.reload_filter(filter_path,cap_filter) #reload filter video and remove cache
+        ret, frame_filter, cap_filter = initDevice.reload_filter(FILTER_PATH,cap_filter) #reload filter video and remove cache
         
+    frame_filter = cv2.resize(frame_filter, (RESIZE_WIDTH, RESIZE_HEIGHT))
+    
     if not ret:
         print('Cannot read from video stream')
         break
-    
-    frame_filter = cv2.resize(frame_filter, (resize_width, resize_height))
-    
+
     
     # Blend the two images and show the result
     tr = 0.3; # transparency between 0-1, show camera if 0

@@ -1,4 +1,3 @@
-
 # Folder
 assets/*
 
@@ -11,3 +10,7 @@ __pycache__
 http-request.http
 schema.graphql
 .graphqlconfig
+
+# Mac OS
+.DS_Store
+
