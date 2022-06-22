@@ -1,0 +1,13 @@
+
+# Folder
+filter/*
+
+# Python
+__pycache__
+
+# IDE
+/.idea
+.vscode
+http-request.http
+schema.graphql
+.graphqlconfig
