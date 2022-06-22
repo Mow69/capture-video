@@ -4,11 +4,11 @@ import time
 import numpy as np
 
 # Python File
-import src.initDevice as initDevice
+import initDevice as initDevice
 
 # Var
 #filter_path = './img/filter1.mp4'
-filter_path='../filter/filter1.mp4'
+filter_path='./filter/filter1.mp4'
 resize_width = 400
 resize_height = 400
 
