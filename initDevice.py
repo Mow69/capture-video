@@ -10,7 +10,7 @@ def init_live():
         print('Cannot open live camera')
         exit()
         
-    ret, frame_live_first = cap_live.read() # ret = <bool>, frame_live_first = <array/null>
+    ret, _ = cap_live.read() # ret = <bool>, _ = <array/null>
     
     if not ret:
         print('Cannot open live camera stream')
@@ -20,12 +20,11 @@ def init_live():
 
 def init_filter(filter_path): # Init Vidéo filter
     cap_filter = cv2.VideoCapture(filter_path)
-
     if not cap_filter.isOpened():
         print('Cannot open video filter: ' + filter_path)
         exit()
         
-    ret, frame_filter_first = cap_filter.read() # ret = <bool>, frame_filter_first = <array/null>
+    ret, _ = cap_filter.read() # ret = <bool>, _ = <array/null>
 
     if not ret:
         print('Cannot open video filter stream: ' + filter_path)
