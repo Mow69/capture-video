@@ -41,11 +41,57 @@ while True:
         print('Cannot read from video stream')
         break
 
-    
+
+    #################################
+    # if foreground array is not empty which
+    # means actual video is still going on
+    if ret:
+       
+        # creating the alpha mask
+        alpha = np.zeros_like(frame_filter)
+        gray = cv2.cvtColor(frame_filter, cv2.COLOR_BGR2GRAY)
+        alpha[:, :, 0] = gray
+        alpha[:, :, 1] = gray
+        alpha[:, :, 2] = gray
+ 
+        # converting uint8 to float type
+        foreground = frame_filter.astype(float)
+        background = frame_live.astype(float)
+ 
+        # normalizing the alpha mask inorder
+        # to keep intensity between 0 and 1
+        alpha = alpha.astype(float)/255
+ 
+        # multiplying the foreground
+        # with alpha matte
+        foreground = cv2.multiply(alpha,
+                                  foreground)
+ 
+        # multiplying the background
+        # with (1 - alpha)
+        background = cv2.multiply(1.0 - alpha,
+                                  background)
+ 
+        # adding the masked foreground
+        # and background together
+        outImage = cv2.add(foreground,
+                           background)
+ 
+        # resizing the masked output
+        ims = cv2.resize(outImage, (RESIZE_WIDTH, RESIZE_HEIGHT))
+ 
+        # showing the masked output video
+        cv2.imshow('Blended', ims/255)
+ 
+        # if the user presses 'q' then the
+        # program breaks from while loop
+    #################################
+
+
     # Blend the two images and show the result
-    tr = 0.3; # transparency between 0-1, show camera if 0
-    frame = ((1-tr) * frame_live.astype(np.double) + tr * frame_filter.astype(np.double)).astype(np.uint8)
-    cv2.imshow('Transparent result', frame)
+    # tr = 0.3; # transparency between 0-1, show camera if 0
+    # frame = ((1-tr) * frame_live.astype(np.double) + tr * frame_filter.astype(np.double)).astype(np.uint8)
+    # cv2.imshow('Transparent result', frame)
 
 
     # KeyPress
