@@ -7,10 +7,10 @@ import numpy as np
 import initDevice as initDevice
 
 # CONST
-CAMERA_PORT = 2
-FILTER_PATH ='./assets/Triangle_VJ_Background_Loop.mp4'
-RESIZE_WIDTH = 400
-RESIZE_HEIGHT = 400
+CAMERA_PORT = 0
+FILTER_PATH ='./assets/1104Z_stktunnelmotionstriangledesign_1.mov'
+RESIZE_WIDTH = 980
+RESIZE_HEIGHT = 540
 
 # Var
 frame_filter_nb = 2
@@ -83,11 +83,11 @@ while True:
     key_press = cv2.waitKeyEx(1)
     if key_press == 27: # exit if ESC is pressed
         break
-    if key_press == 2490368: # speed up if up-arrow is pressed
+    if key_press == 2490368 or key_press == ord('m'): # speed up if up-arrow is pressed
         if frame_filter_nb < 5:
             frame_filter_nb += 1
         print(frame_filter_nb)  
-    if key_press == 2621440: # speed down if down-arrow is pressed
+    if key_press == 2621440 or key_press == ord('l'): # speed down if down-arrow is pressed
         if frame_filter_nb > 0:
             frame_filter_nb -= 1
         print(frame_filter_nb)
