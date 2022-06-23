@@ -15,7 +15,7 @@ services:
         networks:
             - nesjs-network
         volumes:
-            - .:/usr/src/app
+            - ./vjing-api:/usr/src/app
             - /usr/src/app/node_modules
         restart: unless-stopped
     prod:
@@ -32,7 +32,7 @@ services:
         networks:
             - nesjs-network
         volumes:
-            - .:/usr/src/app
+            - ./vjing-api:/usr/src/app
             - /usr/src/app/node_modules
         restart: unless-stopped
 
