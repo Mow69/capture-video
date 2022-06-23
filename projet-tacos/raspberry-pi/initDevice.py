@@ -44,7 +44,10 @@ def reload_filter(filter_path,last_cap_filter):
         exit()
         
         
-def close_all(cap_live,cap_filter):
+def close_all(cap_live,cap_filter,cap_flash):
     cap_live.release()
     cap_filter.release()
+    if cap_flash:
+        cap_flash.release()
     cv2.destroyAllWindows()
+    
