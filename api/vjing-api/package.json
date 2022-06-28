@@ -21,16 +21,22 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^8.0.0",
-    "@nestjs/core": "^8.0.0",
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/config": "^2.1.0",
+    "@nestjs/core": "^8.4.7",
     "@nestjs/passport": "^8.2.2",
-    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-express": "^8.4.7",
+    "@nestjs/typeorm": "^8.1.4",
+    "joi": "^17.4.2",
+    "mysql2": "^2.3.3",
+    "nestjs-joi": "^1.7.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "@nestjs/cli": "8.2.6",
@@ -55,7 +61,8 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "webpack": "^5.73.0"
   },
   "jest": {
     "moduleFileExtensions": [
