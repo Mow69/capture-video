@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
+RUN npm cache clean --force
+
 RUN npm install glob rimraf
 
 RUN npm install --only=development
@@ -20,6 +22,8 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+
+RUN npm cache clean --force
 
 RUN npm install --only=production
 
