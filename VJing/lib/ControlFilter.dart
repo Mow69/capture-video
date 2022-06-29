@@ -92,7 +92,7 @@ class _ControlFilter extends State<ControlFilter> {
                     child: ListView.builder(
                         itemCount: asyncSnapshot.data.length,
                         itemBuilder: (context, index) {
-                          return (asyncSnapshot.data[index].name);
+                          return Text(asyncSnapshot.data[index].name);
                         }));
               }
             }));
