@@ -1,13 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
-// import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_VJing/filters/filter.dart';
-import 'package:flutter_VJing/filters/filterRepo.dart';
+
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
+import 'filters/filter.dart';
+import 'filters/filterRepo.dart';
 
 class ControlFilter extends StatefulWidget {
   final BluetoothDevice server;
@@ -35,6 +33,7 @@ class _ControlFilter extends State<ControlFilter> {
   // }
 
   List<Card> filterWidget = [];
+  // List<Filter> filters = [];
   bool isConnecting = true;
   bool get isConnected => connection != null && connection.isConnected;
 
@@ -69,41 +68,33 @@ class _ControlFilter extends State<ControlFilter> {
     });
   }
 
-  getFilters() async {
+  getFilters(context) async {
     List<Filter> filters = await FilterRepository().getAll(context);
-    filterWidget = filters.map((filter) => Card(
-          child: ListTile(title: Text(filter.name)),
-        ));
+    inspect(filters);
+    return filters;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Future<List<Filter>> filtersInstance = FilterRepository().getAll(context);
-    var filters;
-    // getFilters();
-    // filtersInstance.then((data) async {
-    //   await filters.add(data);
-    // });
 
-    // inspect(getFilters());
-    // Future<void> filters = filtersInstance.then((data) => value);
-    // inspect(filters);
-    // filtersData.then((elFilter) {
-    //   add(elFilter);
-    // });
+    getFilters(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text("Mes Filtres"),
         ),
-        body: Center(
-          child: buildFilter(),
-        ));
+        body: FutureBuilder(
+            future: getFilters(context),
+            builder: (BuildContext context, AsyncSnapshot asyncSnapshot) {
+              if (asyncSnapshot.data == null) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return Center(
+                    child: ListView.builder(
+                        itemCount: asyncSnapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return (asyncSnapshot.data[index].name);
+                        }));
+              }
+            }));
   }
-
-  Widget buildFilter() =>
-      ListView.builder(itemBuilder: (context, index) {
-       return Row(
-          children: filterWidget,
-        );
-      });
 }

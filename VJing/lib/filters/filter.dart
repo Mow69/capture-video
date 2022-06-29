@@ -3,14 +3,14 @@ class Filter {
   String name;
   String icon;
 
-  Filter({
+  Filter( {
      this.id,
      this.name,
      this.icon,
   });
 
   factory Filter.fromJson(Map<String, Object> data) {
-    return Filter(
+    return Filter( 
       id: data['id'] as int,
       name: data['name'] as String,
       icon: data['icon']as String,
