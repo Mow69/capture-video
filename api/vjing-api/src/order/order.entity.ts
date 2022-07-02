@@ -1,7 +1,7 @@
-import { User } from 'src/auth/user.entity';
+import { User } from 'src/users/user.entity';
 import { Filter } from 'src/filter/filter.entity';
 import { PaymentMethod } from 'src/payment/paymentMethod.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Order {
@@ -12,12 +12,12 @@ export class Order {
   price: number;
 
   @OneToMany(type => User, user => user.id)
-  id_user: number;
+  user_id: number;
 
-  @OneToMany(type => Filter, filter => filter.id)
-  id_filter: number;
+  @ManyToOne(type => Filter, filter => filter.id)
+  filter_id: number;
 
-  @OneToMany(type => PaymentMethod, payment_method => payment_method.id)
-  id_payment_method: number;
+  @ManyToOne(type => PaymentMethod, payment_method => payment_method.id)
+  payment_method_id: number;
 
 }

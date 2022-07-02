@@ -1,6 +1,6 @@
 import { Category } from 'src/category_filter/category.entity';
 import { VideoExt } from 'src/video/videoExt.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Filter {
@@ -19,10 +19,10 @@ export class Filter {
   @Column()
   price: number;
 
-  @OneToMany(type => Category, category => category.id)
-  id_category: number;
+  @ManyToOne(type => Category, category => category.id)
+  category: Category;
 
-  @OneToMany(type => VideoExt, video_ext => video_ext.id)
-  id_video_ext: number;
+  @ManyToOne(type => VideoExt, video_ext => video_ext.id)
+  video_ext: VideoExt;
 
 }
