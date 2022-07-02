@@ -1,40 +1,43 @@
 import { Injectable } from '@nestjs/common';
-
-// This should be a real class/interface representing a user entity
-export type User = {
-    userId: Number,
-    username: String,
-    password: String,
-};
-
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-
-const user1Password: String = 'changeme';
-const user2Password: String = 'guess';
-
-const user1EncryptedPassword: String = bcrypt.hashSync(user1Password, saltRounds);
-const user2EncryptedPassword: String = bcrypt.hashSync(user2Password, saltRounds);
+import { InjectRepository } from '@nestjs/typeorm';
+import { InsertCreateUserDto } from 'src/auth/dto/auth.dto';
+import { Repository, DataSource } from 'typeorm';
+import { User } from './user.entity';
+import * as bcrypt from "bcrypt"
 
 @Injectable()
 export class UsersService {
-    private user1: User = {
-        userId: 1,
-        username: 'john',
-        password: user1EncryptedPassword,
-    };
-    private user2: User = {
-        userId: 2,
-        username: 'maria',
-        password: user2EncryptedPassword,
-    };
-    
-    private readonly users = [
-        this.user1,
-        this.user2,
-        ];
+    constructor(
+        @InjectRepository(User) private readonly usersRepository: Repository<User>
+    ) {}
 
-        async findOne(username: string): Promise<User | undefined> {
-        return this.users.find(user => user.username === username);
-        }
+    findAll(): Promise<User[]> {
+        return this.usersRepository.find();
+    }
+    
+    findOne(id: number): Promise<User> {
+        return this.usersRepository.findOneBy({ id });
+    }
+    findOneEmail(email: string): Promise<User> {
+        return this.usersRepository.findOneBy({ email });
+    }
+
+    async insert(userData: InsertCreateUserDto): Promise<User> {
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(userData.password, saltOrRounds);
+        
+        const newUser = new User;
+        newUser.email = userData.email;
+        newUser.username = userData.username;
+        newUser.last_name = userData.last_name;
+        newUser.first_name = userData.first_name;
+        newUser.password = hash;
+
+        await this.usersRepository.save(newUser);
+        return newUser;
+    }
+
+    async remove(id: number): Promise<void> {
+        await this.usersRepository.delete(id);
+    }
 }

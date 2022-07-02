@@ -1,30 +1,48 @@
+import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
-const bcrypt = require('bcrypt');
+import * as bcrypt from 'bcrypt';
+import { createUserDto } from './dto/auth.dto';
+import { SecurityService } from 'src/tools/security.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private config: ConfigService,
+    private security: SecurityService
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    console.log(user)
-    if (user && bcrypt.compare(pass, user.password)) {
-      const { password, ...result } = user;
+  async validateUser(email: string, pass: string): Promise<any> {
+    const userFund = await this.usersService.findOneEmail(email);
+    if (userFund && bcrypt.compareSync(pass, userFund.password)) {
+      const { password, ...result } = userFund;
       return result;
     }
+    
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return {
-      access_token: this.jwtService.sign(payload),
+  async createToken(user: any) {
+    const { id, username } = user;
+    const payload = { 
+      sub: id,
+      username: username
     };
+    const accessToken = this.jwtService.sign(payload);
+    return {
+      access_token: accessToken,
+      expires_in: this.config.get("ACCESS_TOKEN_EXPIRES"),
+      token_type: 'Bearer',
+    };
+  }
+
+  async register(res,dto: createUserDto) {
+    const dtoVerify = await this.security.checkRegisterData(dto);
+    this.usersService.insert(dtoVerify);
+    return res.status(201).send('User has been register');
   }
 }
