@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "847302ec-4d8d-485e-92a1-d25ac411f190",
+		"_postman_id": "56777372-a486-4494-bf26-c861287f628e",
 		"name": "VJing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20387326"
+		"_exporter_id": "8969158"
 	},
 	"item": [
 		{
@@ -60,7 +60,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "test3@test3.fr",
+									"value": "homer@test.fr",
 									"type": "text"
 								},
 								{
@@ -75,12 +75,17 @@
 								},
 								{
 									"key": "last_name",
-									"value": "DE CILLIA",
+									"value": "Simpson",
 									"type": "text"
 								},
 								{
 									"key": "first_name",
-									"value": "aurélien",
+									"value": "Homer",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "homer",
 									"type": "text"
 								}
 							]
@@ -114,7 +119,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJfbmFtZSI6ImpvaG4iLCJpYXQiOjE2NTY1ODM0NTksImV4cCI6MTY1NjU4NzA1OSwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.gEqcMCueoSOgLS40LVTI83f9rPPl-tsJk4s8X1lfuLU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXJuYW1lIjoicGF0cmljayIsImlhdCI6MTY1NjkyNjc4NSwiZXhwIjoxNjU2OTMwMzg1LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdCJ9.jToW7_xLXO3UMybozMDP24uLtN5WnmtFqZCDYFpgJ-s",
 									"type": "string"
 								}
 							]
@@ -128,7 +133,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/profile",
+							"raw": "http://localhost:3000/api/user/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -136,6 +141,7 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"user",
 								"profile"
 							]
 						}
@@ -163,6 +169,45 @@
 								"api",
 								"users",
 								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"9"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},

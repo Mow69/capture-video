@@ -37,7 +37,9 @@ export class UsersService {
         return newUser;
     }
 
-    async remove(id: number): Promise<void> {
+    async remove(res, id: number): Promise<void> {
         await this.usersRepository.delete(id);
+        return res.status(201).send(`User ${id} has been deleted`);
+
     }
 }
