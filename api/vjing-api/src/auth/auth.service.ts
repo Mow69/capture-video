@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { createUserDto } from './dto/auth.dto';
 import { SecurityService } from 'src/tools/security.service';
 import { UsersService } from 'src/users/users.service';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +41,7 @@ export class AuthService {
     };
   }
 
-  async register(res,dto: createUserDto) {
+  async register(res: Response,dto: createUserDto): Promise<Response> {
     const dtoVerify = await this.security.checkRegisterData(dto);
     this.usersService.insert(dtoVerify);
     return res.status(201).send('User has been register');

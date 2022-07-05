@@ -5,6 +5,7 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 
 import { Body, Controller, Get, Post, Request, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { createUserDto } from './dto/auth.dto';
+import { Response } from 'express';
 
 
 @Controller("auth")
@@ -18,7 +19,7 @@ export class AuthController {
   }
 
   @Post('register')
-	register(@Res() res,@Body() dto: createUserDto ) {
+	register(@Res() res: Response,@Body() dto: createUserDto ) {
 		return this.authService.register(res,dto);
 	}
 

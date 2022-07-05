@@ -6,6 +6,7 @@ import { User } from './user.entity';
 import * as bcrypt from "bcrypt"
 import { PatchUserDto } from './dto/users.dto';
 import { SecurityService } from 'src/tools/security.service';
+import { Response } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -41,7 +42,7 @@ export class UsersService {
         return newUser;
     }
 
-    async update(res: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void | PromiseLike<void>; new(): any; }; }; }, dto: PatchUserDto, id: number): Promise<void> {
+    async update(res: Response, dto: PatchUserDto, id: number): Promise<Response> {
 
         const userData = await this.security.checkUpdatingUser(dto);
         
@@ -59,7 +60,7 @@ export class UsersService {
         return res.status(201).send(`User ${id} has been updated`);
     }
 
-    async remove(res, id: number): Promise<void> {
+    async remove(res: Response, id: number): Promise<Response> {
         await this.usersRepository.delete(id);
         return res.status(201).send(`User ${id} has been deleted`);
     }
