@@ -19,7 +19,20 @@ Presentation rapide du concept de votre projet
 
 <img src="./images/vjing-bg.png" alt="vjing-logo-bg" width="100%"/>
 
-### <p style="text-align: center;"><b><i>VJ'IT!</i></b></p>
+<p style="text-align: center; font-style: italic; font-size: 1.5em;">
+    <b>
+        <i>
+            <span style="color: #ff045d;">VJ</span>
+            <span style="color: #1c18cb;">'</span>
+            <span style="color: #ffc101;">IT</span>
+            <span style="color: #1c18cb;">!</span>
+        </i>
+    </b>
+</p>
+
+
+
+
 
 
 <b><i>VJ'IT!</i></b> est l'invité vedette de tes meilleures soirées. 
@@ -90,16 +103,17 @@ Avec la webcam haute définition branchée au Raspberry, capture des moments ino
 Liste des membres de l'équipe projet
 
 DFS21A :
-- Mouaz Saadaoui (Back-end Developer)
+- [Mouaz Saadaoui](https://github.com/Mow69) (Back-end Developer)
+
 
 DFS24A :
-- Claude Buisson (Lead Front-end Developer)
-- Adrien Charrier (Front-end Developper)
-- Aurélien De Cilla (Back-end Developer)
-- Malek Medjoudj (Front-end Developer)
+- [Claude Buisson](https://github.com/claude-bssn) (Lead Front-end Developer)
+- [Adrien Charrier](https://github.com/4dr1en) (Front-end Developper)
+- [Aurélien De Cilla](https://github.com/Ade-cillia) (Back-end Developer)
+- [Malek Medjoudj](https://github.com/MAlykylam) (Front-end Developer)
 
 EMSI :
-- Marine Gillet (Cheffe de Projet)
+- [Marine Gillet](https://github.com/marine2002) (Cheffe de Projet)
 
 ---
 
