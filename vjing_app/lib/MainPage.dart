@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:vjing_app/ControlFilter.dart';
+import 'package:vjing_app/home.dart';
 import 'package:vjing_app/communication.dart';
 
 import './SelectBondedDevicePage.dart';
@@ -79,12 +80,15 @@ class _MainPage extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Connexion au boitier VJing'),
-      ),
       body: Container(
         child: ListView(
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Connexion au boitier VJIT',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+              ),
+            ),
             Divider(),
             ListTile(title: const Text('General')),
             SwitchListTile(
@@ -128,8 +132,7 @@ class _MainPage extends State<MainPage> {
                 ),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    shadowColor: MaterialStateProperty.all(Colors.transparent),
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent)
+                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   child: const Text('Settings'),
                   onPressed: () {
@@ -170,10 +173,9 @@ class _MainPage extends State<MainPage> {
                 ),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    shadowColor: MaterialStateProperty.all(Colors.transparent),
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent)
+                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
                   ),
-                  child: const Text('Connect to paired device to chat'),
+                  child: const Text('Connect to paired VJIT device'),
                   onPressed: () async {
                     final BluetoothDevice selectedDevice =
                         await Navigator.of(context).push(
@@ -186,7 +188,7 @@ class _MainPage extends State<MainPage> {
 
                     if (selectedDevice != null) {
                       print('Connect -> selected ' + selectedDevice.address);
-                      _startChat(context, selectedDevice);
+                      _controlFilters(context, selectedDevice);
                     } else {
                       print('Connect -> no device selected');
                     }
@@ -200,11 +202,11 @@ class _MainPage extends State<MainPage> {
     );
   }
 
-  void _startChat(BuildContext context, BluetoothDevice server) {
+  void _controlFilters(BuildContext context, BluetoothDevice server) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return ControlFilter(server: server);
+          return ControlFilter(server: server,);
         },
       ),
     );
