@@ -6,9 +6,10 @@ import 'package:mobx/mobx.dart';
 import 'package:vjing_app/ControlFilter.dart';
 import 'package:vjing_app/communication.dart';
 
+import 'LoginPage.dart';
+import 'RegisterPage.dart';
 import './SelectBondedDevicePage.dart';
 import './connectionState.dart' as cs;
-//import './ChatPage2.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -200,6 +201,30 @@ class _MainPage extends State<MainPage> {
                 },
               ),
             ),
+          ),
+          ElevatedButton(
+            child: const Text('Login'),
+            onPressed: () {
+              // go to the login page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
+            },
+          ),
+          ElevatedButton(
+            child: const Text('Register'),
+            onPressed: () {
+              // go to the register page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RegisterPage(),
+                ),
+              );
+            },
           ),
           ElevatedButton(
               onPressed: (){
