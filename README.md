@@ -17,7 +17,7 @@
 
 Presentation rapide du concept de votre projet
 
-![alt vjing-logo-bg](./images/vjing-bg.png?raw=true "Background VJ'IT")
+<img src="./images/vjing-bg.png" alt="vjing-logo-bg" width="100%"/>
 
 ### <p style="text-align: center;"><b><i>VJ'IT!</i></b></p>
 
