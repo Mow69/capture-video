@@ -4,7 +4,7 @@ import { createUserDto, InsertCreateUserDto } from 'src/auth/dto/auth.dto';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from "bcrypt"
-import { PatchUserDto, UpdateUserDto } from './dto/users.dto';
+import { UpdateUserDto } from './dto/users.dto';
 import { SecurityService } from 'src/tools/security.service';
 import { Response } from 'express';
 
@@ -45,23 +45,28 @@ export class UsersService {
         return newUser;
     }
 
-    async update(res: Response, dto: PatchUserDto, id: number): Promise<Response> {
+    async update(res: Response, dto: UpdateUserDto, id: number): Promise<Response> {
 
         const userData = await this.checkUpdatingUser(dto);
 
-        const user = new User;
-        user.email = userData.email;
-        user.username = userData.username;
-        user.last_name = userData.last_name;
-        user.first_name = userData.first_name;
-        if(userData.password) {
-            const saltOrRounds = 10;
-            const hash = await bcrypt.hash(userData.password, saltOrRounds);
-            user.password = hash;
-        }
+        const updateUser = new User;
+        updateUser.email = userData.email;
+        updateUser.username = userData.username;
+        updateUser.last_name = userData.last_name;
+        updateUser.first_name = userData.first_name;
 
-        await this.usersRepository.update(id, userData);
-        return res.status(201).send(`User ${id} has been updated`);
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(dto.password, saltOrRounds);
+        updateUser.password = hash;
+
+        
+        await this.findOne(id);
+        if(Object.keys(updateUser).length === 0){
+            return res.status(200).send(`No data to update`)
+        } else{
+            await this.usersRepository.update(id, updateUser);
+            return res.status(201).send(`Filter ${id} has been updated`);
+        }
     }
 
     async remove(res: Response, id: number): Promise<Response> {
@@ -70,14 +75,22 @@ export class UsersService {
         return res.status(201).send(`User ${id} has been deleted`);
     }
 
-    async checkUpdatingUser(dto: PatchUserDto): Promise<UpdateUserDto> {
+    async checkUpdatingUser(dto: UpdateUserDto): Promise<UpdateUserDto> {
 
         let dtoVerify = {} as UpdateUserDto;
         if(dto.email) dtoVerify.email = await this.securityService.checkEmail(dto.email);
         if(dto.username) dtoVerify.username = await this.securityService.cleanString(dto.username, "username", 1, 254);
         if(dto.last_name) dtoVerify.last_name = await this.securityService.cleanString(dto.last_name, "last_name", 1, 254);
         if(dto.first_name) dtoVerify.first_name = await this.securityService.cleanString(dto.first_name, "first_name", 1, 254);
-        if(dto.password) dtoVerify.password = await this.securityService.checkPassword(dto.password);
+        if(dto.password) {
+            if(!dto.repeat_password){
+                throw new BadRequestException("repeat_password is missing")
+            }
+            await this.securityService.checkPassword(
+                dto.password,
+                dto.repeat_password,
+            );
+        }
         return dtoVerify;
     }
     async checkRegisterData(dto: createUserDto): Promise<InsertCreateUserDto> {

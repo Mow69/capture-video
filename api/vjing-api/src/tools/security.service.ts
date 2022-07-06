@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { createUserDto, InsertCreateUserDto } from 'src/auth/dto/auth.dto';
-import { PatchUserDto, UpdateUserDto } from 'src/users/dto/users.dto';
+import { UpdateUserDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
