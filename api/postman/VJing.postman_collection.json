@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "56777372-a486-4494-bf26-c861287f628e",
+		"_postman_id": "847302ec-4d8d-485e-92a1-d25ac411f190",
 		"name": "VJing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8969158"
+		"_exporter_id": "20387326"
 	},
 	"item": [
 		{
@@ -13,18 +13,13 @@
 					"name": "Login",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "test2@test2.fr",
+									"value": "test3@test597.fr",
 									"type": "text"
 								},
 								{
@@ -60,7 +55,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "homer@test.fr",
+									"value": "rick@test.fr",
 									"type": "text"
 								},
 								{
@@ -75,17 +70,17 @@
 								},
 								{
 									"key": "last_name",
-									"value": "Simpson",
+									"value": "DE CILLIA",
 									"type": "text"
 								},
 								{
 									"key": "first_name",
-									"value": "Homer",
+									"value": "aurélien",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "homer",
+									"value": "test",
 									"type": "text"
 								}
 							]
@@ -119,7 +114,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXJuYW1lIjoicGF0cmljayIsImlhdCI6MTY1NjkyNjc4NSwiZXhwIjoxNjU2OTMwMzg1LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdCJ9.jToW7_xLXO3UMybozMDP24uLtN5WnmtFqZCDYFpgJ-s",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJfbmFtZSI6ImpvaG4iLCJpYXQiOjE2NTY1ODM0NTksImV4cCI6MTY1NjU4NzA1OSwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.gEqcMCueoSOgLS40LVTI83f9rPPl-tsJk4s8X1lfuLU",
 									"type": "string"
 								}
 							]
@@ -147,6 +142,51 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get userjson",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/1/userjson",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"userjson"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get userjsonDownloaded",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/1/userjson/downloaded",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"userjson",
+								"downloaded"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -154,12 +194,32 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "FindAll",
+					"name": "Get all users",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/users/all",
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -168,7 +228,7 @@
 							"path": [
 								"api",
 								"users",
-								"all"
+								"1"
 							]
 						}
 					},
@@ -191,7 +251,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/9",
+							"raw": "http://localhost:3000/api/users/11",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -200,7 +260,7 @@
 							"path": [
 								"api",
 								"users",
-								"9"
+								"11"
 							],
 							"query": [
 								{
@@ -217,25 +277,13 @@
 					"name": "Update user by id",
 					"request": {
 						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "password",
-								"value": "mdpquicangeTout1",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "rick@test.fr",
+									"value": "testte1fd@sgdfhgfhgfst.frfjjj",
 									"type": "text"
 								},
 								{
@@ -261,7 +309,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/10",
+							"raw": "http://localhost:3000/api/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -270,34 +318,336 @@
 							"path": [
 								"api",
 								"users",
-								"10"
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filter",
+			"item": [
+				{
+					"name": "Create filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "pa",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "ffdsfsfsdfsdf",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "sfsfsdfdsfdsfds",
+									"type": "text"
+								},
+								{
+									"key": "path",
+									"value": "fdsfsdgsdds",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "2400",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "video_ext_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
 							],
-							"query": [
+							"port": "3000",
+							"path": [
+								"api",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/filter/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"filter",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update filter",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
 								{
-									"key": "email",
-									"value": "rick@test.fr",
-									"disabled": true
+									"key": "name",
+									"value": "gfdg",
+									"type": "text"
 								},
 								{
-									"key": "password",
-									"value": "mdpquicangeTout1",
-									"disabled": true
+									"key": "category_id",
+									"value": "2",
+									"type": "text"
 								},
 								{
-									"key": "last_name",
-									"value": "Sanchez",
-									"disabled": true
-								},
-								{
-									"key": "first_name",
-									"value": "Rick",
-									"disabled": true
-								},
-								{
-									"key": "username",
-									"value": "picklesrick",
+									"key": "price",
+									"value": "10000",
+									"type": "text",
 									"disabled": true
 								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/filter/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"filter",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Filter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/filter/20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"filter",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "price",
+									"value": "2400",
+									"type": "text"
+								},
+								{
+									"key": "is_downloaded",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "filter_id",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "payment_method_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "ffsfdsgdfhdfh",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "10000",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/order/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"2"
 							]
 						}
 					},
