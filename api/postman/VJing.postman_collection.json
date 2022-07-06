@@ -212,6 +212,96 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update user by id",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "mdpquicangeTout1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "rick@test.fr",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "mdpquicangeTout1",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Sanchez",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Rick",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "picklesrick",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"10"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "rick@test.fr",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "mdpquicangeTout1",
+									"disabled": true
+								},
+								{
+									"key": "last_name",
+									"value": "Sanchez",
+									"disabled": true
+								},
+								{
+									"key": "first_name",
+									"value": "Rick",
+									"disabled": true
+								},
+								{
+									"key": "username",
+									"value": "picklesrick",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { createUserDto, InsertCreateUserDto } from 'src/auth/dto/auth.dto';
+import { PatchUserDto, UpdateUserDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -32,6 +33,19 @@ export class SecurityService {
     return dtoVerify;
   }
 
+    // User Update
+    async checkUpdatingUser(dto: PatchUserDto): Promise<UpdateUserDto> {
+
+      let dtoVerify = {} as UpdateUserDto;
+      if(dto.email) dtoVerify.email = await this.checkEmail(dto.email);
+      if(dto.username) dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
+      if(dto.last_name) dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
+      if(dto.first_name) dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
+      if(dto.password) dtoVerify.password = await this.checkPassword(dto.password);
+      console.log(dtoVerify);
+      return dtoVerify;
+    }
+
   // Update
   async checkUpdateData(
     userId: string,
@@ -50,10 +64,10 @@ export class SecurityService {
   }
 
   // CheckData
-  async checkPassword(password, repeatPassword) {
+  async checkPassword(password, repeatPassword?) {
     const numberRegExp = /^(?=.*\d)/;
     const upperRegExp = /^(?=.*[A-Z])/;
-    if (password !== repeatPassword) {
+    if (repeatPassword && (password !== repeatPassword)) {
       throw new UnauthorizedException(
         'Password and repeatPassword are not same',
       );

@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertCreateUserDto } from 'src/auth/dto/auth.dto';
-import { Repository, DataSource } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from "bcrypt"
+import { PatchUserDto } from './dto/users.dto';
+import { SecurityService } from 'src/tools/security.service';
+import { Response } from 'express';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectRepository(User) private readonly usersRepository: Repository<User>
+        @InjectRepository(User) private readonly usersRepository: Repository<User>,
+        @Inject(forwardRef(() => SecurityService))
+        private security: SecurityService,
     ) {}
 
     findAll(): Promise<User[]> {
@@ -37,9 +42,27 @@ export class UsersService {
         return newUser;
     }
 
-    async remove(res, id: number): Promise<void> {
+    async update(res: Response, dto: PatchUserDto, id: number): Promise<Response> {
+
+        const userData = await this.security.checkUpdatingUser(dto);
+
+        const user = new User;
+        user.email = userData.email;
+        user.username = userData.username;
+        user.last_name = userData.last_name;
+        user.first_name = userData.first_name;
+        if(userData.password) {
+            const saltOrRounds = 10;
+            const hash = await bcrypt.hash(userData.password, saltOrRounds);
+            user.password = hash;
+        }
+
+        await this.usersRepository.update(id, userData);
+        return res.status(201).send(`User ${id} has been updated`);
+    }
+
+    async remove(res: Response, id: number): Promise<Response> {
         await this.usersRepository.delete(id);
         return res.status(201).send(`User ${id} has been deleted`);
-
     }
 }
