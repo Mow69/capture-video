@@ -35,21 +35,13 @@ export class SecurityService {
 
     // User Update
     async checkUpdatingUser(dto: PatchUserDto): Promise<UpdateUserDto> {
-      if (
-        !dto.email ||
-        !dto.username ||
-        !dto.password ||
-        !dto.last_name ||
-        !dto.first_name
-      ) {
-        throw new UnauthorizedException('data is missing');
-      }
+
       let dtoVerify = {} as UpdateUserDto;
-      dtoVerify.email = await this.checkEmail(dto.email);
-      dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
-      dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
-      dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
-      dtoVerify.password = await this.checkPassword(dto.password);
+      if(dto.email) dtoVerify.email = await this.checkEmail(dto.email);
+      if(dto.username) dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
+      if(dto.last_name) dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
+      if(dto.first_name) dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
+      if(dto.password) dtoVerify.password = await this.checkPassword(dto.password);
       console.log(dtoVerify);
       return dtoVerify;
     }

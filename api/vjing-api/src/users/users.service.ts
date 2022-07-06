@@ -45,16 +45,17 @@ export class UsersService {
     async update(res: Response, dto: PatchUserDto, id: number): Promise<Response> {
 
         const userData = await this.security.checkUpdatingUser(dto);
-        
-        const saltOrRounds = 10;
-        const hash = await bcrypt.hash(userData.password, saltOrRounds);
-        
+
         const user = new User;
         user.email = userData.email;
         user.username = userData.username;
         user.last_name = userData.last_name;
         user.first_name = userData.first_name;
-        user.password = hash;
+        if(userData.password) {
+            const saltOrRounds = 10;
+            const hash = await bcrypt.hash(userData.password, saltOrRounds);
+            user.password = hash;
+        }
 
         await this.usersRepository.update(id, userData);
         return res.status(201).send(`User ${id} has been updated`);
