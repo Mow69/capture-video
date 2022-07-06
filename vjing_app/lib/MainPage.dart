@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:vjing_app/ControlFilter.dart';
+import 'package:vjing_app/drawerMenu.dart';
 import 'package:vjing_app/home.dart';
 import 'package:vjing_app/communication.dart';
 
-import 'LoginPage.dart';
-import 'RegisterPage.dart';
 import './SelectBondedDevicePage.dart';
-import './connectionState.dart' as cs;
+//import './ChatPage2.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -19,7 +16,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPage extends State<MainPage> {
   BluetoothState _bluetoothState = BluetoothState.UNKNOWN;
-  cs.ConnectionState _connectionState = cs.ConnectionState();
 
   String _address = "...";
   String _name = "...";
@@ -84,30 +80,31 @@ class _MainPage extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerMenu(),
       body: Container(
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Connexion au boitier VJIT',
+        child: ListView(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Connexion au boitier VJIT',
               style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-              ),
             ),
-            Divider(),
-            ListTile(title: const Text('General')),
-            SwitchListTile(
-              activeColor: Color.fromRGBO(251, 101, 128, 1),
-              title: const Text('Enable Bluetooth'),
-              value: _bluetoothState.isEnabled,
-              onChanged: (bool value) {
-                // Do the request and update with the true value then
-                future() async {
-                  // async lambda seems to not working
-                  if (value)
-                    await FlutterBluetoothSerial.instance.requestEnable();
-                  else
-                    await FlutterBluetoothSerial.instance.requestDisable();
-                }
+          ),
+          Divider(),
+          ListTile(title: const Text('General')),
+          SwitchListTile(
+            activeColor: Color.fromRGBO(251, 101, 128, 1),
+            title: const Text('Enable Bluetooth'),
+            value: _bluetoothState.isEnabled,
+            onChanged: (bool value) {
+              // Do the request and update with the true value then
+              future() async {
+                // async lambda seems to not working
+                if (value)
+                  await FlutterBluetoothSerial.instance.requestEnable();
+                else
+                  await FlutterBluetoothSerial.instance.requestDisable();
+              }
 
               future().then((_) {
                 setState(() {});
@@ -134,15 +131,17 @@ class _MainPage extends State<MainPage> {
                     Color.fromRGBO(241, 23, 117, 1),
                   ],
                 ),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                  ),
-                  child: const Text('Settings'),
-                  onPressed: () {
-                    FlutterBluetoothSerial.instance.openSettings();
-                  },
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
                 ),
+                child: const Text('Settings'),
+                onPressed: () {
+                  FlutterBluetoothSerial.instance.openSettings();
+                },
               ),
             ),
           ),
@@ -176,56 +175,33 @@ class _MainPage extends State<MainPage> {
                     Color.fromRGBO(241, 23, 117, 1),
                   ],
                 ),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                  ),
-                  child: const Text('Connect to paired VJIT device'),
-                  onPressed: () async {
-                    final BluetoothDevice selectedDevice =
-                        await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SelectBondedDevicePage(checkAvailability: false);
-                        },
-                      ),
-                    );
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
+                ),
+                child: const Text('Connect to paired VJIT device'),
+                onPressed: () async {
+                  final BluetoothDevice selectedDevice =
+                      await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SelectBondedDevicePage(checkAvailability: false);
+                      },
+                    ),
+                  );
 
-                    if (selectedDevice != null) {
-                      print('Connect -> selected ' + selectedDevice.address);
-                      _controlFilters(context, selectedDevice);
-                    } else {
-                      print('Connect -> no device selected');
-                    }
-                  },
-                ),
-              );
-            },
-          ),
-          ElevatedButton(
-            child: const Text('Register'),
-            onPressed: () {
-              // go to the register page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RegisterPage(),
-                ),
-              );
-            },
-          ),
-          ElevatedButton(
-              onPressed: (){
-                _connectionState.connect(['adrien','iuqhdsuhigfdiuhgfdiuhdegd']);
-              },
-              child: const Text('kikou')
-          ),
-          Observer(
-              builder: (context){
-                return Text(
-                  _connectionState.isConnected.value ? 'Connected' : 'Disconnected'
-                );
-              }
+                  if (selectedDevice != null) {
+                    print('Connect -> selected ' + selectedDevice.address);
+                    _controlFilters(context, selectedDevice);
+                  } else {
+                    print('Connect -> no device selected');
+                  }
+                },
+              ),
+            ),
           )
         ]),
       ),
@@ -236,7 +212,9 @@ class _MainPage extends State<MainPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return ControlFilter(server: server,);
+          return ControlFilter(
+            server: server,
+          );
         },
       ),
     );
