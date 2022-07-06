@@ -6,10 +6,13 @@
 
 ![Project](https://img.shields.io/badge/Projet_type-IoT-blue.svg)
 ![Project](https://img.shields.io/badge/Projet_mode-Hackathon/sprint-orange.svg)
-![Session](https://img.shields.io/badge/Session-DFS18-brightgreen.svg)
-![Session](https://img.shields.io/badge/Session-DFS19-brightgreen.svg)
+![Session](https://img.shields.io/badge/Session-EMSI-brightgreen.svg)
 ![Session](https://img.shields.io/badge/Session-DFS21-brightgreen.svg)
-![Session](https://img.shields.io/badge/Session-DFS23-brightgreen.svg)
+![Session](https://img.shields.io/badge/Session-DFS24-brightgreen.svg)
+
+---
+
+📝 NOTE : Ce repository est la suite de [celui-ci](https://github.com/Mow69/capture-video) qui a servi de commencement.
 
 ---
 
