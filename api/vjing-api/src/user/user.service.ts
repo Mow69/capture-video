@@ -2,18 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Filter } from 'src/filter/entities/filter.entity';
 import { User } from 'src/users/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private readonly usersRepository: Repository<User>,
-        @InjectRepository(Filter) private readonly filterRepository: Repository<Filter>
+        @InjectRepository(Filter) private readonly filterRepository: Repository<Filter>,
+        private usersService: UsersService
     ) {}
     getProfile(user){
         return user;
     }
     async userjson(userId: number){
+        await this.usersService.findOne(userId);
+        
         return await this.filterRepository.createQueryBuilder("filter")
         .leftJoinAndSelect("filter.orders", "order")
         .leftJoinAndSelect("filter.category", "category")
@@ -28,6 +32,8 @@ export class UserService {
         .execute();    
     }
     async userjsonDownloaded(userId: number){
+        await this.usersService.findOne(userId);
+
         return await this.filterRepository.createQueryBuilder("filter")
             .leftJoinAndSelect("filter.orders", "order")
             .leftJoinAndSelect("filter.category", "category")
