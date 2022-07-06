@@ -31,7 +31,6 @@ class _Home extends State<Home> {
                 type: BottomNavigationBarType.fixed,
                 iconSize: 40,
                 showSelectedLabels: false,
-                // on tap, open the drawer
                 onTap: (int index) {
                   if (index == 0) {
                     // open the drawer

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-
+import './connectionState.dart' as cs;
 import 'LoginPage.dart';
 import 'RegisterPage.dart';
 
+
 class DrawerMenu extends StatelessWidget {
+  cs.ConnectionState _connectionState = cs.ConnectionState();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -22,10 +25,11 @@ class DrawerMenu extends StatelessWidget {
               color: Color.fromRGBO(251, 101, 128, .8),
             ),
           ),
-          ListTile(
+
+         if(!_connectionState.isConnected.value)
+           ...[ListTile(
             title: Text('Login'),
             onTap: () {
-              // go to login page
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -45,6 +49,7 @@ class DrawerMenu extends StatelessWidget {
               );
             },
           ),
+          ],
         ],
       ),
     );
