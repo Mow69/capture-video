@@ -94,6 +94,18 @@ export class SecurityService {
     return this.testSanitizeString(str, input);
   }
 
+  cleanBool(bool,input){
+    switch (bool) {
+      case "0":
+      case "1":
+      case "false":
+      case "true":
+        return bool;
+      default:
+        throw new BadRequestException(`${input} is not an boolean`);
+    }
+  }
+
   cleanInt(int,input,min=null,max=null){
     int=Number(int)
     if (!Number.isInteger(int)){
