@@ -57,6 +57,8 @@ services:
         restart: always
         ports:
             - 8081:8080
+        networks:
+            - nesjs-network
             
 networks:
     nesjs-network:
