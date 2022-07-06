@@ -48,6 +48,8 @@ services:
             MYSQL_PASSWORD: vjing
         ports:
             - '4306:3306'
+        networks:
+            - nesjs-network
         volumes:
             - mariadb:/var/lib/mysql
     adminer:

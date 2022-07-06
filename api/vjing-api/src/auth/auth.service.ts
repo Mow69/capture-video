@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt';
@@ -14,17 +14,16 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private config: ConfigService,
-    private security: SecurityService
+    private securityService: SecurityService
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const userFund = await this.usersService.findOneEmail(email);
-    if (userFund && bcrypt.compareSync(pass, userFund.password)) {
-      const { password, ...result } = userFund;
+    const userFound  = await this.usersService.findOneEmail(email);
+    if (userFound && bcrypt.compareSync(pass, userFound.password)) {
+      const { password, ...result } = userFound;
       return result;
     }
-    
-    return null;
+    throw new UnauthorizedException('Credentials incorrect');
   }
 
   async createToken(user: any) {
@@ -41,8 +40,8 @@ export class AuthService {
     };
   }
 
-  async register(res: Response,dto: createUserDto): Promise<Response> {
-    const dtoVerify = await this.security.checkRegisterData(dto);
+  async register(res: Response,dto: createUserDto) {
+    const dtoVerify = await this.securityService.checkRegisterData(dto);
     this.usersService.insert(dtoVerify);
     return res.status(201).send('User has been register');
   }

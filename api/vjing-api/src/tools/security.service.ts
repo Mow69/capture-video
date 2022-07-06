@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { createUserDto, InsertCreateUserDto } from 'src/auth/dto/auth.dto';
 import { PatchUserDto, UpdateUserDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
@@ -103,24 +103,49 @@ export class SecurityService {
     return email;
   }
 
-  cleanString(str,input,min=1,max=254){
+  cleanString(str,input,min=null,max=null){
     this.checkStringLength(str,input,min,max);
     return this.testSanitizeString(str, input);
   }
 
-  checkStringLength(str,input,min,max) {
-    if (str.length < min) {
-      throw new UnauthorizedException(`${input} length must be greater than ${min-1}`);
-    } else if (str.length > max) {
-      throw new UnauthorizedException(`${input} length must be lower than ${max+1}`);
+  cleanBool(bool,input){
+    switch (bool) {
+      case "0":
+      case "1":
+      case "false":
+      case "true":
+        return bool;
+      default:
+        throw new BadRequestException(`${input} is not an boolean`);
     }
-    return;
+  }
+
+  cleanInt(int,input,min=null,max=null){
+    int=Number(int)
+    if (!Number.isInteger(int)){
+      throw new BadRequestException(`${input} is not an integer`);
+    }
+    if (min != null && int < min) {
+      throw new BadRequestException(`${input} number must be greater than ${min-1}`);
+    } else if (max != null && int > max) {
+      throw new BadRequestException(`${input} number must be lower than ${max+1}`);
+    }
+    return int;
+  }
+
+  checkStringLength(str,input,min=null,max=null) {
+    if (min != null && str.length < min) {
+      throw new BadRequestException(`${input} length must be greater than ${min-1}`);
+    } else if (max != null && str.length > max) {
+      throw new BadRequestException(`${input} length must be lower than ${max+1}`);
+    }
+    return str;
   }
 
   testSanitizeString(str, input) {
     let cleanStr = this.sanitizeString(str)
     if (str !== cleanStr) {
-      throw new UnauthorizedException(
+      throw new BadRequestException(
         `The '${input}' field contains unauthorized / invalid special characters`,
       );
     }
