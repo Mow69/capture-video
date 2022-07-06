@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   async register(res: Response,dto: createUserDto) {
-    const dtoVerify = await this.securityService.checkRegisterData(dto);
+    const dtoVerify = await this.usersService.checkRegisterData(dto);
     this.usersService.insert(dtoVerify);
     return res.status(201).send('User has been register');
   }

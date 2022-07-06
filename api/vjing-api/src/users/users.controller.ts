@@ -9,9 +9,14 @@ export class UsersController {
       private usersService: UsersService
       ) {}
 
-    @Get("all")
+    @Get()
     findAll() {
       return this.usersService.findAll();
+    }
+
+    @Get(":id")
+    findOne(@Param("id") id: string) {
+      return this.usersService.findOne(+id);
     }
 
     @Patch(":id")

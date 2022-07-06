@@ -8,60 +8,6 @@ export class SecurityService {
   constructor(
     private usersService: UsersService,
   ) {}
-  // Register
-  async checkRegisterData(dto: createUserDto): Promise<InsertCreateUserDto> {
-    if (
-      !dto.email ||
-      !dto.username ||
-      !dto.password ||
-      !dto.repeat_password ||
-      !dto.last_name ||
-      !dto.first_name
-    ) {
-      throw new UnauthorizedException('data is missing');
-    }
-    let dtoVerify = {} as InsertCreateUserDto;
-    dtoVerify.email = await this.checkEmail(dto.email);
-    dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
-    dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
-    dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
-    dtoVerify.password = await this.checkPassword(
-      dto.password,
-      dto.repeat_password,
-    );
-    console.log(dtoVerify);
-    return dtoVerify;
-  }
-
-    // User Update
-    async checkUpdatingUser(dto: PatchUserDto): Promise<UpdateUserDto> {
-
-      let dtoVerify = {} as UpdateUserDto;
-      if(dto.email) dtoVerify.email = await this.checkEmail(dto.email);
-      if(dto.username) dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
-      if(dto.last_name) dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
-      if(dto.first_name) dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
-      if(dto.password) dtoVerify.password = await this.checkPassword(dto.password);
-      console.log(dtoVerify);
-      return dtoVerify;
-    }
-
-  // Update
-  async checkUpdateData(
-    userId: string,
-    phone: number,
-    email: string,
-    pseudo: string,
-    firstName: string,
-    lastName: string,
-    roles: string,
-  ) {
-    const updateData = {};
-    // if (pseudo) {
-    //   updateData[`pseudo`] = await this.checkPseudo(pseudo);
-    // }
-    return updateData;
-  }
 
   // CheckData
   async checkPassword(password, repeatPassword?) {
