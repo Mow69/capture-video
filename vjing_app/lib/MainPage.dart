@@ -180,12 +180,12 @@ class _MainPage extends State<MainPage> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Colors.transparent),
+                  MaterialStateProperty.all(Colors.transparent),
                 ),
                 child: const Text('Connect to paired VJIT device'),
                 onPressed: () async {
                   final BluetoothDevice selectedDevice =
-                      await Navigator.of(context).push(
+                  await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
                         return SelectBondedDevicePage(checkAvailability: false);

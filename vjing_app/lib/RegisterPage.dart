@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:convert';
 import 'LoginPage.dart';
 
@@ -149,68 +150,122 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Center(
             child: Form(
               key: _formKey,
-              child: Wrap(
-                direction: Axis.horizontal,
-                runSpacing: 16.0,
-                children: <Widget>[
-                  _buildEmail(),
-                  _buildPassword(),
-                  _buildPasswordConfirmation(),
-                  _buildLastname(),
-                  _buildFirstname(),
-                  _buildUsername(),
-                  ElevatedButton(
-                    child: const Text('Register'),
-                    style: ButtonStyle(),
-                    onPressed: () async {
-                      if (_formKey.currentContext == null ||
-                          !_formKey.currentState.validate()) {
-                        return;
-                      }
-
-                      Uri url =
-                          Uri.parse('http://10.0.2.2:3000/api/auth/register');
-                      Object data = {
-                        "email": _email,
-                        "password": _password,
-                        "repeat_password": _repeatPassword,
-                        "last_name": _lastName,
-                        "first_name": _firstName,
-                        "username": _username
-                      };
-                      try {
-                        http.Response response = await http.post(url,
-                            headers: <String, String>{
-                              'Content-Type': 'application/json; charset=UTF-8',
-                            },
-                            body: jsonEncode(data));
-
-                        if (response.statusCode != 201) {
-                          Map res = json.decode(response.body);
-                          String msg = 'Unknown error';
-                          if( res.containsKey('message') ) {
-                            msg = res['message'];
-                          }
-                          else if (response.reasonPhrase != '') {
-                            msg = response.reasonPhrase;
-                          }
-
-                          _showError(context, msg);
-                        } else {
-                          print('Registration success');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
+              child: SingleChildScrollView(
+                child: Wrap(
+                  runSpacing: 16.0,
+                  alignment: WrapAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 10.0),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/images/logo.svg',
+                              semanticsLabel: 'logo',
+                              height: 60,
                             ),
-                          );
-                        }
-                      } catch (e) {
-                        _showError(context, e.toString());
-                      }
-                    },
-                  ),
-                ],
+                            const SizedBox(height: 20),
+                            Text(
+                              'VJIT',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        )),
+                    _buildEmail(),
+                    _buildPassword(),
+                    _buildPasswordConfirmation(),
+                    _buildLastname(),
+                    _buildFirstname(),
+                    _buildUsername(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black26,
+                                offset: Offset(0, 4),
+                                blurRadius: 5.0)
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: [0.0, 1.0],
+                            colors: [
+                              Color.fromRGBO(251, 101, 128, 1),
+                              Color.fromRGBO(241, 23, 117, 1),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentContext == null ||
+                                !_formKey.currentState.validate()) {
+                              return;
+                            }
+
+                            Uri url = Uri.parse(
+                                'http://10.0.2.2:3000/api/auth/register');
+                            Object data = {
+                              "email": _email,
+                              "password": _password,
+                              "repeat_password": _repeatPassword,
+                              "last_name": _lastName,
+                              "first_name": _firstName,
+                              "username": _username
+                            };
+                            try {
+                              http.Response response = await http.post(url,
+                                  headers: <String, String>{
+                                    'Content-Type':
+                                        'application/json; charset=UTF-8',
+                                  },
+                                  body: jsonEncode(data));
+
+                              if (response.statusCode != 201) {
+                                Map res = json.decode(response.body);
+                                String msg = 'Unknown error';
+                                if (res.containsKey('message')) {
+                                  msg = res['message'];
+                                } else if (response.reasonPhrase != '') {
+                                  msg = response.reasonPhrase;
+                                }
+
+                                _showError(context, msg);
+                              } else {
+                                print('Registration success');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              _showError(context, e.toString());
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )),
