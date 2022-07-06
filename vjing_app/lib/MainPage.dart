@@ -4,6 +4,7 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vjing_app/ControlFilter.dart';
+import 'package:vjing_app/home.dart';
 import 'package:vjing_app/communication.dart';
 
 import 'LoginPage.dart';
@@ -83,27 +84,30 @@ class _MainPage extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Connexion au boitier VJing'),
-      ),
-
       body: Container(
-        child: ListView(children: <Widget>[
-          Divider(),
-          ListTile(title: const Text('General')),
-          SwitchListTile(
-            activeColor: Color.fromRGBO(251, 101, 128, 1),
-            title: const Text('Enable Bluetooth'),
-            value: _bluetoothState.isEnabled,
-            onChanged: (bool value) {
-              // Do the request and update with the true value then
-              future() async {
-                // async lambda seems tableo not working
-                if (value)
-                  await FlutterBluetoothSerial.instance.requestEnable();
-                else
-                  await FlutterBluetoothSerial.instance.requestDisable();
-              }
+        child: ListView(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Connexion au boitier VJIT',
+              style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Divider(),
+            ListTile(title: const Text('General')),
+            SwitchListTile(
+              activeColor: Color.fromRGBO(251, 101, 128, 1),
+              title: const Text('Enable Bluetooth'),
+              value: _bluetoothState.isEnabled,
+              onChanged: (bool value) {
+                // Do the request and update with the true value then
+                future() async {
+                  // async lambda seems to not working
+                  if (value)
+                    await FlutterBluetoothSerial.instance.requestEnable();
+                  else
+                    await FlutterBluetoothSerial.instance.requestDisable();
+                }
 
               future().then((_) {
                 setState(() {});
@@ -130,17 +134,15 @@ class _MainPage extends State<MainPage> {
                     Color.fromRGBO(241, 23, 117, 1),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shadowColor: MaterialStateProperty.all(Colors.transparent),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent)),
-                child: const Text('Settings'),
-                onPressed: () {
-                  FlutterBluetoothSerial.instance.openSettings();
-                },
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
+                  child: const Text('Settings'),
+                  onPressed: () {
+                    FlutterBluetoothSerial.instance.openSettings();
+                  },
+                ),
               ),
             ),
           ),
@@ -174,42 +176,28 @@ class _MainPage extends State<MainPage> {
                     Color.fromRGBO(241, 23, 117, 1),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shadowColor: MaterialStateProperty.all(Colors.transparent),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent)),
-                child: const Text('Connect to paired device to chat'),
-                onPressed: () async {
-                  final BluetoothDevice selectedDevice =
-                      await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SelectBondedDevicePage(checkAvailability: false);
-                      },
-                    ),
-                  );
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
+                  child: const Text('Connect to paired VJIT device'),
+                  onPressed: () async {
+                    final BluetoothDevice selectedDevice =
+                        await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SelectBondedDevicePage(checkAvailability: false);
+                        },
+                      ),
+                    );
 
-                  if (selectedDevice != null) {
-                    print('Connect -> selected ' + selectedDevice.address);
-                    _startChat(context, selectedDevice);
-                  } else {
-                    print('Connect -> no device selected');
-                  }
-                },
-              ),
-            ),
-          ),
-          ElevatedButton(
-            child: const Text('Login'),
-            onPressed: () {
-              // go to the login page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
+                    if (selectedDevice != null) {
+                      print('Connect -> selected ' + selectedDevice.address);
+                      _controlFilters(context, selectedDevice);
+                    } else {
+                      print('Connect -> no device selected');
+                    }
+                  },
                 ),
               );
             },
@@ -244,11 +232,11 @@ class _MainPage extends State<MainPage> {
     );
   }
 
-  void _startChat(BuildContext context, BluetoothDevice server) {
+  void _controlFilters(BuildContext context, BluetoothDevice server) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return ControlFilter(server: server);
+          return ControlFilter(server: server,);
         },
       ),
     );

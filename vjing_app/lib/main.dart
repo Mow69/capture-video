@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vjing_app/home.dart';
 
 import 'MainPage.dart';
 
-void main() => runApp(new Application());
+void main() => runApp(new ExampleApplication());
+
+class ExampleApplication extends StatelessWidget {
 
 Map<int, Color> colorCodes = {
   50: Color.fromRGBO(251, 101, 128, .1),
@@ -17,17 +20,26 @@ Map<int, Color> colorCodes = {
   900: Color.fromRGBO(251, 101, 128, 1),
 };
 // pink color code: fb6580
-MaterialColor pika = MaterialColor(0xfb6580, colorCodes);
 
-class Application extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    MaterialColor pika = MaterialColor(0xfb6580, colorCodes);
     return MaterialApp(
-      home: MainPage(),
+      home: Home(),
       theme: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Colors.red,
+          primaryColor: pika[900],
+          highlightColor: pika[900],
+        
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              primary:  pika[900], // background (button) color
+              onPrimary: Colors.white, 
+              elevation: 0.0,      
+              ),
           ),
+        ),
     );
   }
 }
