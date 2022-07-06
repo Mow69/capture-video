@@ -6,8 +6,8 @@ export class UserController {
   constructor() {}
 
   @UseGuards(JwtAuthGuard)
-    @Get('profile')
-    getProfile(@Request() req) {
-      return req.user;
-    }
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
 }

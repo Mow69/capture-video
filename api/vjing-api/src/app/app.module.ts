@@ -8,12 +8,13 @@ import { AuthModule } from 'src/auth/auth.module';
 
 import { User } from 'src/users/user.entity';
 import { Category } from 'src/category_filter/category.entity';
-import { Filter } from 'src/filter/filter.entity';
 import { Order } from 'src/order/order.entity';
 import { PaymentMethod } from 'src/payment/paymentMethod.entity';
 import { UsersModule } from 'src/users/users.module';
-import { VideoExt } from 'src/video/videoExt.entity';
+import { VideoExt } from 'src/video_ext/videoExt.entity';
 import { UserModule } from 'src/user/user.module';
+import { FilterModule } from 'src/filter/filter.module';
+import { Filter } from 'src/filter/entities/filter.entity';
 
 var config = new ConfigService;
 @Module({
@@ -32,7 +33,8 @@ var config = new ConfigService;
     }),
     AuthModule,
     UserModule,
-    UsersModule
+    UsersModule,
+    FilterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
