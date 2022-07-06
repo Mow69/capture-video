@@ -1,5 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { createUserDto, InsertCreateUserDto } from 'src/auth/dto/auth.dto';
+import { UpdateUserDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -7,53 +8,12 @@ export class SecurityService {
   constructor(
     private usersService: UsersService,
   ) {}
-  // Register
-  async checkRegisterData(dto: createUserDto): Promise<InsertCreateUserDto> {
-    if (
-      !dto.email ||
-      !dto.username ||
-      !dto.password ||
-      !dto.repeat_password ||
-      !dto.last_name ||
-      !dto.first_name
-    ) {
-      throw new UnauthorizedException('data is missing');
-    }
-    let dtoVerify = {} as InsertCreateUserDto;
-    dtoVerify.email = await this.checkEmail(dto.email);
-    dtoVerify.username = await this.cleanString(dto.username, "username", 1, 254);
-    dtoVerify.last_name = await this.cleanString(dto.last_name, "last_name", 1, 254);
-    dtoVerify.first_name = await this.cleanString(dto.first_name, "first_name", 1, 254);
-    dtoVerify.password = await this.checkPassword(
-      dto.password,
-      dto.repeat_password,
-    );
-    console.log(dtoVerify);
-    return dtoVerify;
-  }
-
-  // Update
-  async checkUpdateData(
-    userId: string,
-    phone: number,
-    email: string,
-    pseudo: string,
-    firstName: string,
-    lastName: string,
-    roles: string,
-  ) {
-    const updateData = {};
-    // if (pseudo) {
-    //   updateData[`pseudo`] = await this.checkPseudo(pseudo);
-    // }
-    return updateData;
-  }
 
   // CheckData
-  async checkPassword(password, repeatPassword) {
+  async checkPassword(password, repeatPassword?) {
     const numberRegExp = /^(?=.*\d)/;
     const upperRegExp = /^(?=.*[A-Z])/;
-    if (password !== repeatPassword) {
+    if (repeatPassword && (password !== repeatPassword)) {
       throw new UnauthorizedException(
         'Password and repeatPassword are not same',
       );
@@ -89,24 +49,49 @@ export class SecurityService {
     return email;
   }
 
-  cleanString(str,input,min=1,max=254){
+  cleanString(str,input,min=null,max=null){
     this.checkStringLength(str,input,min,max);
     return this.testSanitizeString(str, input);
   }
 
-  checkStringLength(str,input,min,max) {
-    if (str.length < min) {
-      throw new UnauthorizedException(`${input} length must be greater than ${min-1}`);
-    } else if (str.length > max) {
-      throw new UnauthorizedException(`${input} length must be lower than ${max+1}`);
+  cleanBool(bool,input){
+    switch (bool) {
+      case "0":
+      case "1":
+      case "false":
+      case "true":
+        return bool;
+      default:
+        throw new BadRequestException(`${input} is not an boolean`);
     }
-    return;
+  }
+
+  cleanInt(int,input,min=null,max=null){
+    int=Number(int)
+    if (!Number.isInteger(int)){
+      throw new BadRequestException(`${input} is not an integer`);
+    }
+    if (min != null && int < min) {
+      throw new BadRequestException(`${input} number must be greater than ${min-1}`);
+    } else if (max != null && int > max) {
+      throw new BadRequestException(`${input} number must be lower than ${max+1}`);
+    }
+    return int;
+  }
+
+  checkStringLength(str,input,min=null,max=null) {
+    if (min != null && str.length < min) {
+      throw new BadRequestException(`${input} length must be greater than ${min-1}`);
+    } else if (max != null && str.length > max) {
+      throw new BadRequestException(`${input} length must be lower than ${max+1}`);
+    }
+    return str;
   }
 
   testSanitizeString(str, input) {
     let cleanStr = this.sanitizeString(str)
     if (str !== cleanStr) {
-      throw new UnauthorizedException(
+      throw new BadRequestException(
         `The '${input}' field contains unauthorized / invalid special characters`,
       );
     }

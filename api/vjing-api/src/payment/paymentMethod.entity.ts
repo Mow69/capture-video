@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/order/entities/order.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class PaymentMethod {
@@ -7,4 +8,7 @@ export class PaymentMethod {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Order, (order: Order) => order.payment_method)
+  orders: Order[];
 }

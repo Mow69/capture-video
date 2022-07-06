@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Order } from 'src/order/entities/order.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -19,5 +20,8 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Order, (order: Order) => order.user)
+  orders: Order[];
 
 }

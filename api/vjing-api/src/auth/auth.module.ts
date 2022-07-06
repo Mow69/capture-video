@@ -1,3 +1,4 @@
+import { SecurityModule } from 'src/tools/security.module';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategy/local.strategy';
@@ -24,8 +25,9 @@ import { SecurityService } from 'src/tools/security.service';
       }),
       inject: [ConfigService],
     }),
+    SecurityModule
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy,SecurityService],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}

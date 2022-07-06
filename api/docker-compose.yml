@@ -52,6 +52,8 @@ services:
             MYSQL_PASSWORD: vjing
         ports:
             - '4306:3306'
+        networks:
+            - nesjs-network
         volumes:
             - mariadb:/var/lib/mysql
     adminer:
@@ -61,6 +63,8 @@ services:
         restart: always
         ports:
             - 8081:8080
+        networks:
+            - nesjs-network
             
 networks:
     nesjs-network:
