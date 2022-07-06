@@ -5,6 +5,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
+import './connectionState.dart' as cs;
 
 class LoginPage extends StatefulWidget {
 	const LoginPage({Key key}) : super(key: key);
@@ -15,6 +18,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 	final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+	cs.ConnectionState _connectionState = cs.ConnectionState();
+
 	String _login = '';
 	String _password = '';
 
@@ -22,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 		return TextFormField(
 			keyboardType: TextInputType.emailAddress,
 			decoration: const InputDecoration(
-				labelText: 'Login',
+				labelText: 'Email',
 				border: OutlineInputBorder(),
 			),
 				onChanged:
@@ -31,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 				},
 				validator: (String value) {
 					if (value == null || value.isEmpty) {
-						return 'Please enter your login';
+						return 'Please enter your Email';
 					}
 					return null;
 				});
@@ -70,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
 				  child: Form(
 						key: _formKey,
 				  	child: Column(
+
 						mainAxisAlignment: MainAxisAlignment.center,
 				  		children: <Widget>[
 				  			_buildLogin(),
@@ -107,6 +114,12 @@ class _LoginPageState extends State<LoginPage> {
 												_showError(context, msg);
 											} else {
 												print('Connected');
+												Map res = json.decode(response.body);
+												_connectionState.connect([
+													_login,
+													res['access_token']
+												]);
+
 											}
 											print('Response status: ${response.statusCode}');
 											print('Response body: ${response.body}');

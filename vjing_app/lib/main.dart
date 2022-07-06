@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'MainPage.dart';
 
-void main() => runApp(new ExampleApplication());
+void main() => runApp(new Application());
+
 Map<int, Color> colorCodes = {
   50: Color.fromRGBO(251, 101, 128, .1),
   100: Color.fromRGBO(251, 101, 128, .2),
@@ -18,7 +19,7 @@ Map<int, Color> colorCodes = {
 // pink color code: fb6580
 MaterialColor pika = MaterialColor(0xfb6580, colorCodes);
 
-class ExampleApplication extends StatelessWidget {
+class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

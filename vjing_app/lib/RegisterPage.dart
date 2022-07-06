@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'LoginPage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key key}) : super(key: key);
@@ -197,6 +198,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           _showError(context, msg);
                         } else {
                           print('Registration success');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
                         }
                       } catch (e) {
                         _showError(context, e.toString());
