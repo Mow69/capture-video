@@ -1,14 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:vjing_app/filters/filter.dart';
 
 class FilterRepository {
   Future<List<Filter>> getAll(BuildContext context) async {
-
-    final filterJson = await DefaultAssetBundle.of(context)
-        .loadString("assets/MOCK_DATA.json");
+    final filterJson =
+        await DefaultAssetBundle.of(context).loadString("assets/filters.json");
     final filterList = parseData(filterJson.toString());
     return filterList;
   }

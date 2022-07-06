@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'filters/filter.dart';
@@ -46,7 +45,6 @@ class _ControlFilter extends State<ControlFilter> {
 
   getFilters(context) async {
     List<Filter> filters = await FilterRepository().getAll(context);
-    inspect(filters);
     return filters;
   }
 
@@ -87,6 +85,8 @@ class _ControlFilter extends State<ControlFilter> {
                       if (asyncSnapshot.data == null) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
+                        asyncSnapshot.data
+                            .removeWhere((el) => el.category.name == 'flash');
                         return GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -97,12 +97,12 @@ class _ControlFilter extends State<ControlFilter> {
                           itemCount: asyncSnapshot.data.length,
                           itemBuilder: (context, index) {
                             Uint8List bytes =
-                                base64Decode(asyncSnapshot.data[index].icon);
+                                base64Decode(asyncSnapshot.data[index].image);
                             return GestureDetector(
                               onTap: () {
                                 String idString =
                                     asyncSnapshot.data[index].id.toString();
-                                return _sendDataToVjit(idString);
+                                return _sendDataToVjit("filterId:$idString");
                               },
                               child: GridTile(
                                 child: Image.memory(
@@ -133,8 +133,9 @@ class _ControlFilter extends State<ControlFilter> {
                         value: _speed,
                         onChanged: (value) {
                           setState(() {
+                            int _speedInt = value.toInt();
                             _speed = value;
-                            _sendDataToVjit("speed:$_speed");
+                            _sendDataToVjit("speed:$_speedInt");
                           });
                         },
                       ),
@@ -189,11 +190,11 @@ class _ControlFilter extends State<ControlFilter> {
                         _camera = _camera == false ? true : false;
                         setState(() {
                           _cameraColor = _camera == false
-                            ? Colors.transparent
-                            : Color.fromRGBO(251, 101, 128, 1);
+                              ? Colors.transparent
+                              : Color.fromRGBO(251, 101, 128, 1);
                           _cameraIcon = _camera == false
-                            ? Icons.videocam_off_outlined
-                            : Icons.videocam_outlined;
+                              ? Icons.videocam_off_outlined
+                              : Icons.videocam_outlined;
                         });
                       },
                       child: Container(
@@ -258,24 +259,37 @@ class _ControlFilter extends State<ControlFilter> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 70,
-                      width: 88,
-                      decoration: BoxDecoration(color: Colors.grey[900]),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Réinitialiser",
-                              style: TextStyle(fontSize: 12),
+                    GestureDetector(
+                      onTap: () {
+                        _sendDataToVjit("reset:true");
+                        setState(() {
+                          _random = false;
+                          _camera = true;
+                          _pause = false;
+                          _randomColor = Colors.transparent;
+                          _cameraColor = Color.fromRGBO(251, 101, 128, 1);
+                          _pauseColor = Colors.transparent;
+                        });
+                      },
+                      child: Container(
+                        height: 70,
+                        width: 88,
+                        decoration: BoxDecoration(color: Colors.grey[900]),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Réinitialiser",
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.refresh,
-                            color: Colors.grey[600],
-                          )
-                        ],
+                            Icon(
+                              Icons.refresh,
+                              color: Colors.grey[600],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -305,6 +319,8 @@ class _ControlFilter extends State<ControlFilter> {
                       if (asyncSnapshot.data == null) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
+                        asyncSnapshot.data
+                            .removeWhere((el) => el.category.name == 'filter');
                         return GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -315,12 +331,12 @@ class _ControlFilter extends State<ControlFilter> {
                           itemCount: asyncSnapshot.data.length,
                           itemBuilder: (context, index) {
                             Uint8List bytes =
-                                base64Decode(asyncSnapshot.data[index].icon);
+                                base64Decode(asyncSnapshot.data[index].image);
                             return GestureDetector(
                               onTap: () {
                                 String idString =
                                     asyncSnapshot.data[index].id.toString();
-                                return _sendDataToVjit(idString);
+                                return _sendDataToVjit("filterId:$idString");
                               },
                               child: GridTile(
                                 child: Image.memory(
@@ -345,7 +361,6 @@ class _ControlFilter extends State<ControlFilter> {
 
     if (text.length > 0) {
       try {
-        print(text);
         connection.output.add(utf8.encode(text));
         await connection.output.allSent;
       } catch (e) {
