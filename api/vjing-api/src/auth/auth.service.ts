@@ -45,4 +45,18 @@ export class AuthService {
     this.usersService.insert(dtoVerify);
     return res.status(201).send('User has been register');
   }
+
+  logout(res,req){
+    return res.status(204).send();
+  }
+
+  async token(authorization){
+    console.log(authorization)
+    const accessToken = authorization.split(" ")[1]
+    return {
+			access_token: accessToken,
+			expires_in: this.config.get("ACCESS_TOKEN_EXPIRES"),
+			token_type: "Bearer",
+		}
+  }
 }

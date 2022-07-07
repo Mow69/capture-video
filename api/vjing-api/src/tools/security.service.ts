@@ -57,10 +57,11 @@ export class SecurityService {
   cleanBool(bool,input){
     switch (bool) {
       case "0":
-      case "1":
       case "false":
+        return false;
+      case "1":
       case "true":
-        return bool;
+        return true;
       default:
         throw new BadRequestException(`${input} is not an boolean`);
     }
