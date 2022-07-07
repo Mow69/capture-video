@@ -1,0 +1,42 @@
+{
+	"1":{
+		"path": "./filter/1.gif",
+		"type": "filter"
+	},
+	"2":{
+		"path": "./filter/2.gif",
+		"type": "filter"
+	},
+	"3":{
+		"path": "./filter/3.gif",
+		"type": "filter"
+	},
+	"4":{
+		"path": "./filter/4.gif",
+		"type": "filter"
+	},
+	"5":{
+		"path": "./filter/5.gif",
+		"type": "flash"
+	},
+	"6":{
+		"path": "./filter/6.gif",
+		"type": "flash"
+	},
+	"7":{
+		"path": "./filter/7.gif",
+		"type": "flash"
+	},
+	"8":{
+		"path": "./filter/8.gif",
+		"type": "flash"
+	},
+	"9":{
+		"path": "./filter/9.gif",
+		"type": "flash"
+	},
+	"10":{
+		"path": "./filter/10.gif",
+		"type": "flash"
+	}
+}
