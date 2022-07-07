@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:convert';
+
 import 'filters/filter.dart';
 import 'filters/filterRepo.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class _ControlFilter extends State<ControlFilter> {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         asyncSnapshot.data
-                            .removeWhere((el) => el.category.name == 'flash');
+                            .removeWhere((el) => el.category_name == 'flash');
                         return GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -130,11 +131,16 @@ class _ControlFilter extends State<ControlFilter> {
                         activeColor: Color.fromRGBO(251, 101, 128, 1),
                         min: 0,
                         max: 10,
+                        divisions: 10,
                         value: _speed,
                         onChanged: (value) {
                           setState(() {
-                            int _speedInt = value.toInt();
                             _speed = value;
+                          });
+                        },
+                        onChangeEnd: (value) {
+                          setState(() {
+                            int _speedInt = value.toInt();
                             _sendDataToVjit("speed:$_speedInt");
                           });
                         },
@@ -150,8 +156,8 @@ class _ControlFilter extends State<ControlFilter> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        _random = !_random;
                         _sendDataToVjit("random:$_random");
-                        _random = _random == false ? true : false;
                         setState(() {
                           _randomColor = _random == false
                               ? Colors.transparent
@@ -186,8 +192,8 @@ class _ControlFilter extends State<ControlFilter> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        _camera = !_camera;
                         _sendDataToVjit("camera:$_camera");
-                        _camera = _camera == false ? true : false;
                         setState(() {
                           _cameraColor = _camera == false
                               ? Colors.transparent
@@ -225,8 +231,8 @@ class _ControlFilter extends State<ControlFilter> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        _pause = !_pause;
                         _sendDataToVjit("pause:$_pause");
-                        _pause = _pause == false ? true : false;
                         setState(() {
                           _pauseColor = _pause == false
                               ? Colors.transparent
@@ -266,6 +272,7 @@ class _ControlFilter extends State<ControlFilter> {
                           _random = false;
                           _camera = true;
                           _pause = false;
+                          _speed = 5;
                           _randomColor = Colors.transparent;
                           _cameraColor = Color.fromRGBO(251, 101, 128, 1);
                           _pauseColor = Colors.transparent;
@@ -320,7 +327,7 @@ class _ControlFilter extends State<ControlFilter> {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         asyncSnapshot.data
-                            .removeWhere((el) => el.category.name == 'filter');
+                            .removeWhere((el) => el.category_name == 'filter');
                         return GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -336,7 +343,7 @@ class _ControlFilter extends State<ControlFilter> {
                               onTap: () {
                                 String idString =
                                     asyncSnapshot.data[index].id.toString();
-                                return _sendDataToVjit("filterId:$idString");
+                                return _sendDataToVjit("flashId:$idString");
                               },
                               child: GridTile(
                                 child: Image.memory(
@@ -356,9 +363,7 @@ class _ControlFilter extends State<ControlFilter> {
   }
 
   void _sendDataToVjit(String text) async {
-    // String text = int.toString();
-    // textEditingController.clear();
-
+    print(text);
     if (text.length > 0) {
       try {
         connection.output.add(utf8.encode(text));
