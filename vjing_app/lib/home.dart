@@ -1,4 +1,4 @@
-import 'package:vjing_app/MainPage.dart';
+import 'package:VJIT/MainPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import './drawerMenu.dart';
@@ -50,7 +50,7 @@ class _Home extends State<Home> {
                   ),
                   BottomNavigationBarItem(
                       icon: Image(
-                          image: AssetImage("assets/images/logo_Vijit.png"),
+                          image: AssetImage("assets/images/logo_Vjit.png"),
                           height: 40),
                       label: "Home"),
                 ]),

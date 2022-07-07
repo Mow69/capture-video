@@ -103,7 +103,7 @@ class _ControlFilter extends State<ControlFilter> {
                               onTap: () {
                                 String idString =
                                     asyncSnapshot.data[index].id.toString();
-                                return _sendDataToVjit("filterId:$idString");
+                                return _sendDataToVjit("filterId:$idString:");
                               },
                               child: GridTile(
                                 child: Image.memory(
@@ -141,7 +141,7 @@ class _ControlFilter extends State<ControlFilter> {
                         onChangeEnd: (value) {
                           setState(() {
                             int _speedInt = value.toInt();
-                            _sendDataToVjit("speed:$_speedInt");
+                            _sendDataToVjit("speed:$_speedInt:");
                           });
                         },
                       ),
@@ -157,7 +157,7 @@ class _ControlFilter extends State<ControlFilter> {
                     GestureDetector(
                       onTap: () {
                         _random = !_random;
-                        _sendDataToVjit("random:$_random");
+                        _sendDataToVjit("random:$_random:");
                         setState(() {
                           _randomColor = _random == false
                               ? Colors.transparent
@@ -193,7 +193,7 @@ class _ControlFilter extends State<ControlFilter> {
                     GestureDetector(
                       onTap: () {
                         _camera = !_camera;
-                        _sendDataToVjit("camera:$_camera");
+                        _sendDataToVjit("camera:$_camera:");
                         setState(() {
                           _cameraColor = _camera == false
                               ? Colors.transparent
@@ -232,7 +232,7 @@ class _ControlFilter extends State<ControlFilter> {
                     GestureDetector(
                       onTap: () {
                         _pause = !_pause;
-                        _sendDataToVjit("pause:$_pause");
+                        _sendDataToVjit("pause:$_pause:");
                         setState(() {
                           _pauseColor = _pause == false
                               ? Colors.transparent
@@ -267,7 +267,7 @@ class _ControlFilter extends State<ControlFilter> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _sendDataToVjit("reset:true");
+                        _sendDataToVjit("reset:true:");
                         setState(() {
                           _random = false;
                           _camera = true;
@@ -275,6 +275,7 @@ class _ControlFilter extends State<ControlFilter> {
                           _speed = 5;
                           _randomColor = Colors.transparent;
                           _cameraColor = Color.fromRGBO(251, 101, 128, 1);
+                          _cameraIcon = Icons.videocam_outlined;
                           _pauseColor = Colors.transparent;
                         });
                       },
@@ -343,7 +344,7 @@ class _ControlFilter extends State<ControlFilter> {
                               onTap: () {
                                 String idString =
                                     asyncSnapshot.data[index].id.toString();
-                                return _sendDataToVjit("flashId:$idString");
+                                return _sendDataToVjit("flashId:$idString:");
                               },
                               child: GridTile(
                                 child: Image.memory(

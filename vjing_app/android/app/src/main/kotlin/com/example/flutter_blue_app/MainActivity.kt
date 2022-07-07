@@ -1,4 +1,4 @@
-package com.example.vjing_app
+package com.example.VJIT
 
 import io.flutter.embedding.android.FlutterActivity
 
