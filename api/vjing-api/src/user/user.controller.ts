@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { UserService } from './user.service';
 
@@ -10,19 +10,19 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Req() req) {
     return this.userService.getProfile(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/userjson')
-  userjson(@Param('id') id: string){ // return all downloaded filter: ;
-    return this.userService.userjson(+id);
+  @Get('userjson')
+  userjson(@Req() req){ // return all downloaded filter: ;
+    return this.userService.userjson(req.user.user_id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/userjson/downloaded')
-  userjsonDownloaded(@Param('id') id: string){ // return all downloaded filter: ;
-    return this.userService.userjsonDownloaded(+id);
+  @Get('userjson/downloaded')
+  userjsonDownloaded(@Req() req){ // return all downloaded filter: ;
+    return this.userService.userjsonDownloaded(req.user.user_id);
   }
 }
