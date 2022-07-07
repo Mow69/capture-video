@@ -16,9 +16,9 @@ class FilterRepository {
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'bearer $token'
           });
-
+      print(response);
       if (response.statusCode != 200) {
-        Map res = json.decode(response.body);
+        var res = json.decode(response.body);
         String msg = 'Unknown error';
         if (res.containsKey('message')) {
           msg = res['message'];
@@ -27,7 +27,8 @@ class FilterRepository {
         }
         print(msg);
       } else {
-        var filters = jsonDecode(response.body);
+        final filters = parseData(response.body);
+
 
         return filters;
       }
