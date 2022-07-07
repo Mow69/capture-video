@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
-import 'package:path/path.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:path_provider/path_provider.dart';
 import './connectionState.dart' as cs;
 
 class LoginPage extends StatefulWidget {

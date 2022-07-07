@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:VJIT/ControlFilter.dart';
+import './ControlFilter.dart';
 import './SelectBondedDevicePage.dart';
 
 class MainPage extends StatefulWidget {
@@ -48,7 +48,7 @@ class _MainPage extends State<MainPage> {
       });
     });
 
-    // Listen for futher state changes
+    // Listen for further state changes
     FlutterBluetoothSerial.instance
         .onStateChanged()
         .listen((BluetoothState state) {
