@@ -23,8 +23,20 @@ export class FilterController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.filterService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const filter = await this.filterService.findOne(+id);
+    return {
+      id: filter.id,
+      name: filter.name,
+      description: filter.description,
+      image: filter.image,
+      price: filter.price,
+      path: filter.path,
+      category_id: filter.category.id,
+      category_name: filter.category.name,
+      video_ext_id: filter.video_ext.id,
+      video_ext_name: filter.video_ext.id
+    }
   }
 
   @UseGuards(JwtAuthGuard)
