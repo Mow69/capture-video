@@ -1,4 +1,4 @@
-# vjing_app
+# VJIT
 
 a chat app with the arduino or raspberry pi via Bluetooth
 

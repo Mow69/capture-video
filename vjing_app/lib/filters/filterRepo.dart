@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:vjing_app/filters/filter.dart';
-import 'package:http/http.dart' as http;
-import '../connectionState.dart' as cs;
+import 'package:VJIT/filters/filter.dart';
 
 class FilterRepository {
   Future<List<Filter>> getAll(BuildContext context) async {

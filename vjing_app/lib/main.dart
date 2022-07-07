@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vjing_app/home.dart';
+import 'package:VJIT/home.dart';
 
 import 'MainPage.dart';
 

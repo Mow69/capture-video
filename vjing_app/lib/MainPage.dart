@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'package:vjing_app/ControlFilter.dart';
+import 'package:VJIT/ControlFilter.dart';
 import './SelectBondedDevicePage.dart';
 
 class MainPage extends StatefulWidget {
