@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
 
                             Uri url = Uri.parse(
-                                'http://10.0.2.2:3000/api/auth/register');
+                                'http://164.92.201.208:3000/api/auth/register');
                             Object data = {
                               "email": _email,
                               "password": _password,

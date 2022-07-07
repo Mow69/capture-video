@@ -1,13 +1,41 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:vjing_app/filters/filter.dart';
+import 'package:http/http.dart' as http;
+import '../connectionState.dart' as cs;
 
 class FilterRepository {
   Future<List<Filter>> getAll(BuildContext context) async {
-    final filterJson =
-        await DefaultAssetBundle.of(context).loadString("assets/filters.json");
-    final filterList = parseData(filterJson.toString());
-    return filterList;
+    cs.ConnectionState _connectionState = cs.ConnectionState();
+    Uri url = Uri.parse('http://164.92.201.208:3000/api/user/userjson/downloaded');
+
+    String token = _connectionState.token.value;
+    try {
+      http.Response response = await http.get(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'bearer $token'
+          });
+
+      if (response.statusCode != 200) {
+        Map res = json.decode(response.body);
+        String msg = 'Unknown error';
+        if (res.containsKey('message')) {
+          msg = res['message'];
+        } else if (response.reasonPhrase != '') {
+          msg = response.reasonPhrase;
+        }
+        print(msg);
+      } else {
+        var filters = jsonDecode(response.body);
+
+        return filters;
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return null;
   }
 
   List<Filter> parseData(String response) {
