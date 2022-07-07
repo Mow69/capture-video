@@ -29,7 +29,7 @@ export class UserService {
             'video_ext.name AS video_ext_name'
         ])
         .where("order.user_id = :userId", { userId })
-        .execute();    
+        .execute();
     }
     async userjsonDownloaded(userId: number){
         await this.usersService.findOne(userId);
@@ -64,3 +64,20 @@ export class UserService {
                     }
                 }
             });*/
+/**
+ * 
+ *   
+        return this.filterRepository.find({
+            where: { 
+                orders: { 
+                    user: { id:userId }
+                } 
+            },
+            relations: ["orders","category","video_ext"],
+            select: {
+                orders: {
+                    is_downloaded: true
+                }
+            }
+        });
+ */
