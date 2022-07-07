@@ -14,11 +14,13 @@ export class UserController {
     return this.userService.getProfile(req.user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id/userjson')
   userjson(@Param('id') id: string){ // return all downloaded filter: ;
     return this.userService.userjson(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id/userjson/downloaded')
   userjsonDownloaded(@Param('id') id: string){ // return all downloaded filter: ;
     return this.userService.userjsonDownloaded(+id);
