@@ -116,7 +116,7 @@ DFS21A :
 DFS24A :
 - [Claude Buisson](https://github.com/claude-bssn) (Lead Front-end Developer)
 - [Adrien Charrier](https://github.com/4dr1en) (Front-end Developper)
-- [Aurélien De Cilla](https://github.com/Ade-cillia) (Back-end Developer)
+- [Aurélien De Cillia](https://github.com/Ade-cillia) (Back-end Developer)
 - [Malek Medjoudj](https://github.com/MAlykylam) (Front-end Developer)
 
 ---
