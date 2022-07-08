@@ -40,6 +40,11 @@ export class FilterService {
     return await this.filterRepository.createQueryBuilder("filter")
       .leftJoinAndSelect("filter.category", "category")
       .leftJoinAndSelect("filter.video_ext", "video_ext")
+      .select([
+        "filter.*",
+        "category.name AS category_name",
+        "video_ext.name AS video_ext_name",
+      ])
       .execute();
   }
 
