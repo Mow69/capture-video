@@ -23,11 +23,11 @@ class _ControlFilter extends State<ControlFilter> {
   double _speed = 5;
   bool _random = false;
   bool _pause = false;
-  bool _camera = true;
+  // bool _camera = true;
   var _randomColor = Colors.transparent;
   var _pauseColor = Colors.transparent;
-  var _cameraColor = Color.fromRGBO(251, 101, 128, 1);
-  IconData _cameraIcon = Icons.videocam_outlined;
+  // var _cameraColor = Color.fromRGBO(251, 101, 128, 1);
+  // IconData _cameraIcon = Icons.videocam_outlined;
 
   @override
   void initState() {
@@ -190,45 +190,45 @@ class _ControlFilter extends State<ControlFilter> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _camera = !_camera;
-                        _sendDataToVjit("camera:$_camera:");
-                        setState(() {
-                          _cameraColor = _camera == false
-                              ? Colors.transparent
-                              : Color.fromRGBO(251, 101, 128, 1);
-                          _cameraIcon = _camera == false
-                              ? Icons.videocam_off_outlined
-                              : Icons.videocam_outlined;
-                        });
-                      },
-                      child: Container(
-                        height: 70,
-                        width: 88,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[900],
-                          border: Border.all(
-                            color: _cameraColor,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "caméra",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ),
-                            Icon(
-                              _cameraIcon,
-                              color: Colors.grey[600],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     _camera = !_camera;
+                    //     _sendDataToVjit("camera:$_camera:");
+                    //     setState(() {
+                    //       _cameraColor = _camera == false
+                    //           ? Colors.transparent
+                    //           : Color.fromRGBO(251, 101, 128, 1);
+                    //       _cameraIcon = _camera == false
+                    //           ? Icons.videocam_off_outlined
+                    //           : Icons.videocam_outlined;
+                    //     });
+                    //   },
+                    //   child: Container(
+                    //     height: 70,
+                    //     width: 88,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.grey[900],
+                    //       border: Border.all(
+                    //         color: _cameraColor,
+                    //       ),
+                    //     ),
+                    //     child: Column(
+                    //       children: [
+                    //         Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Text(
+                    //             "caméra",
+                    //             style: TextStyle(fontSize: 12),
+                    //           ),
+                    //         ),
+                    //         Icon(
+                    //           _cameraIcon,
+                    //           color: Colors.grey[600],
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () {
                         _pause = !_pause;
@@ -270,12 +270,12 @@ class _ControlFilter extends State<ControlFilter> {
                         _sendDataToVjit("reset:true:");
                         setState(() {
                           _random = false;
-                          _camera = true;
+                          // _camera = true;
                           _pause = false;
                           _speed = 5;
                           _randomColor = Colors.transparent;
-                          _cameraColor = Color.fromRGBO(251, 101, 128, 1);
-                          _cameraIcon = Icons.videocam_outlined;
+                          // _cameraColor = Color.fromRGBO(251, 101, 128, 1);
+                          // _cameraIcon = Icons.videocam_outlined;
                           _pauseColor = Colors.transparent;
                         });
                       },
