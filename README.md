@@ -62,7 +62,7 @@ Liste des technologies et outils employés dans votre projet
     - Raspberry Pi
         - Python 3
         - pip 3 
-        - PyBluez pour la connexion Bluetooth   
+        - Blue Dot pour la connexion Bluetooth   
 
 ---
 
