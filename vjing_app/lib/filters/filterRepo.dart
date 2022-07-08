@@ -7,7 +7,7 @@ import '../connectionState.dart' as cs;
 class FilterRepository {
   Future<List<Filter>> getAll(BuildContext context) async {
     cs.ConnectionState _connectionState = cs.ConnectionState();
-    Uri url = Uri.parse('http://164.92.201.208:3000/api/user/userjson/downloaded');
+    Uri url = Uri.parse('http://164.92.201.208:3000/api/filter');
 
     String token = _connectionState.token.value;
     try {

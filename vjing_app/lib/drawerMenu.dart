@@ -19,7 +19,7 @@ class DrawerMenu extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15.0, 0, 10.0),
                   child: SvgPicture.asset(
-                    'assets/images/logo.svg',
+                    'assets/images/logo-shadow.svg',
                     semanticsLabel: 'logo',
                     height: 60,
                   )
@@ -39,8 +39,8 @@ class DrawerMenu extends StatelessWidget {
                 end: Alignment.bottomRight,
                 stops: [0.0, 1.0],
                 colors: [
-                  Color.fromRGBO(251, 101, 128, 1),
-                  Color.fromRGBO(241, 23, 117, 1),
+                  Color.fromRGBO(239, 77, 105, 1.0),
+                  Color.fromRGBO(150, 13, 71, 1.0),
                 ],
               )
               //color: Color.fromRGBO(251, 101, 128, .8),
@@ -48,7 +48,7 @@ class DrawerMenu extends StatelessWidget {
           ),
           if (!_connectionState.isConnected.value) ...[
             ListTile(
-              title: Text('Login'),
+              title: Text('Connexion'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -59,7 +59,7 @@ class DrawerMenu extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Register'),
+              title: Text('Inscription'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -69,7 +69,7 @@ class DrawerMenu extends StatelessWidget {
                 );
               },
             ),
-          ],
+          ]
         ],
       ),
     );

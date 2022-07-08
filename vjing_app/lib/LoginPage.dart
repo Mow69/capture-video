@@ -2,14 +2,10 @@
 /// we send the login and the password to the api
 /// and we get the token
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import './connectionState.dart' as cs;
 
 class LoginPage extends StatefulWidget {
@@ -161,14 +157,10 @@ class _LoginPageState extends State<LoginPage> {
                               }
                               print('Response status: ${response.statusCode}');
                               print('Response body: ${response.body}');
+                              _showSuccess(context);
                             } catch (e) {
                               _showError(context, e.toString());
                             }
-                            /*_updateUserFilters().then((r) {
-                              if(!r) {
-                                _showError(context, 'Error when writing the filters.json file');
-                              }
-                            });*/
                           },
                         ),
                       )),
@@ -199,46 +191,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  /*Future<bool> _updateUserFilters() async {
-    Uri url = Uri.parse('http://10.0.2.2:3000/api/user/3/userjson/downloaded');
-
-    String token = _connectionState.token.value;
-    try {
-      http.Response response = await http.get(url,
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'bearer $token'
-          });
-
-      if (response.statusCode != 200) {
-        Map res = json.decode(response.body);
-        String msg = 'Unknown error';
-        if (res.containsKey('message')) {
-          msg = res['message'];
-        } else if (response.reasonPhrase != '') {
-          msg = response.reasonPhrase;
-        }
-        print(msg);
-      } else {
-        var filters = jsonDecode(response.body);
-
-
-        /*
-        Directory appDocDir = await getApplicationDocumentsDirectory();
-        String fPath = '${appDocDir.parent.path}/assets/filters.json';
-
-        File file = File(fPath);
-        String content = file.readAsStringSync();
-        print(content);
-        await file.create(recursive: true);
-        await file.writeAsString(response.body);
-        content = file.readAsStringSync();
-        print(content);*/
-        return true;
-      }
-    } catch (e) {
-      print(e);
-    }
-    return false;
-  }*/
+  static void _showSuccess(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Succès'),
+            content: Text('Connection établie'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Supper !'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // go to home
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
+            ],
+          );
+        });
+  }
 }
