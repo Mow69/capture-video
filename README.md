@@ -6,10 +6,13 @@
 
 ![Project](https://img.shields.io/badge/Projet_type-IoT-blue.svg)
 ![Project](https://img.shields.io/badge/Projet_mode-Hackathon/sprint-orange.svg)
-![Session](https://img.shields.io/badge/Session-DFS18-brightgreen.svg)
-![Session](https://img.shields.io/badge/Session-DFS19-brightgreen.svg)
+![Session](https://img.shields.io/badge/Session-EMSI-brightgreen.svg)
 ![Session](https://img.shields.io/badge/Session-DFS21-brightgreen.svg)
-![Session](https://img.shields.io/badge/Session-DFS23-brightgreen.svg)
+![Session](https://img.shields.io/badge/Session-DFS24-brightgreen.svg)
+
+---
+
+📝 NOTE : Ce repository est la suite de [celui-ci](https://github.com/Mow69/capture-video) qui a servi de commencement.
 
 ---
 
@@ -48,6 +51,9 @@ Balance tes filtres sur la foule dansante sur le rythme endiablé des meilleurs 
 Liste des technologies et outils employés dans votre projet
 
 - <b>Technologies :</b>
+    - Front-end mobile:
+        - Dart
+        - Flutter     
     - Back-end
         - MariaDB
         - TypeScrypt
@@ -56,20 +62,18 @@ Liste des technologies et outils employés dans votre projet
     - Raspberry Pi
         - Python 3
         - pip 3 
-        - PyBluez pour la connexion Bluetooth
-    - Front-end mobile:
-        - Dart
-        - Flutter        
+        - Blue Dot pour la connexion Bluetooth   
 
 ---
 
 - <b>Matériel utilisé :</b>
-    - 1 Kit complet Raspberry Pi 4 Modèle B 4G RAM+64G SD avec boitier écran tactile  
-    - Un écran LCD HDMI (non tactile)
+    - 1 Kit complet [Raspberry Pi 4](https://fr.rs-online.com/web/p/raspberry-pi/1822096) Modèle B 4G RAM+64G SD avec [boitier](https://www.amazon.fr/GeeekPi-Raspberry-Ventilateur-40X40X10mm-Dissipateurs/dp/B07XCKNM8J/) écran tactile  
+    - [Un écran](https://www.amazon.fr/Moniteur-Portable-Raspberry-capacitif-1024x600/dp/B087GFY4KL) LCD HDMI (non tactile)
     - Un clavier sans fil Rii K12
-    - Piles, cables jumper, multiprises
+    - Piles, cables jumper, multiprises, 2 [cables](https://www.amazon.fr/UGREEN-Supporte-Ethernet-Zenbook-UX330UA/dp/B015GR44CG/)  micro HDMI vers HDMI
     - 1 multiprise 220V + USB  
-    - 1 Webcam HD 1080px
+    - 1 [Webcam](https://www.amazon.fr/Logitech-int%C3%A9gr%C3%A9-compatible-Youtube-Facebook/dp/B006A2Q81M)  HD 1080px
+    - 1 [Vidéo projecteur](https://www.amazon.fr/Videoprojecteur-Vamvo-Projecteur-Retroprojecteur-Compatibles/dp/B07RB49JSM/) 
 
 ---
 
@@ -93,7 +97,7 @@ Avec la webcam haute définition branchée au Raspberry, capture des moments ino
 
 ---
 
-<u>Schéma sur de la base de donnée de VJ'IT!</u>
+<u>Schéma UML de la base de donnée de VJ'IT!</u>
 ![alt vjing-schema-bdd](./images/vjing-schema-bdd.png?raw=true "VJ'IT! Database Schema")
 
 ---
@@ -102,6 +106,9 @@ Avec la webcam haute définition branchée au Raspberry, capture des moments ino
 
 Liste des membres de l'équipe projet
 
+EMSI :
+- [Marine Gillet](https://github.com/marine2002) (Cheffe de Projet)
+
 DFS21A :
 - [Mouaz Saadaoui](https://github.com/Mow69) (Back-end Developer)
 
@@ -109,11 +116,8 @@ DFS21A :
 DFS24A :
 - [Claude Buisson](https://github.com/claude-bssn) (Lead Front-end Developer)
 - [Adrien Charrier](https://github.com/4dr1en) (Front-end Developper)
-- [Aurélien De Cilla](https://github.com/Ade-cillia) (Back-end Developer)
+- [Aurélien De Cillia](https://github.com/Ade-cillia) (Back-end Developer)
 - [Malek Medjoudj](https://github.com/MAlykylam) (Front-end Developer)
-
-EMSI :
-- [Marine Gillet](https://github.com/marine2002) (Cheffe de Projet)
 
 ---
 
