@@ -123,4 +123,30 @@ DFS24A :
 
 ## <img src="./images/vjing-logo-seul.png" alt="vjing-logo-seul" width="15"/> Demo
 
-Lien vers une vidéo de démonstration du produit fini
+[Lien vers la video de la demonstration](https://youtu.be/iZ2nCDYJfRk) 
+
+---
+
+## <img src="./images/vjing-logo-seul.png" alt="vjing-logo-seul" width="15"/> Angle d'amélioration
+
+La réalisation du projet a été pensé afin de facilité les améliorations futures. 
+
+En vu d'une prochaine version nous prévoyons:
+
+- la personnalisation de la liste des filtres par user
+- l'achat de filtres par stripe
+- optimisation de l'app sur IOS
+- automatisation de la connexion par Bluetooth au boitier VJIT
+- optimisation pleine écran automatique
+- optimisation de l'utilisation du boitier en mode one Screen
+- optimisation du lag de la video 
+- utilisation du produit en full hors ligne
+- double authentification par mail a la création du compte et au changement du mot de pass.
+- intégration continu de projet
+- adapter le code flutter pour le rafraichissement du token (déjà en place sur l'api cf: postman)
+- déplacement de l'attribut is_downloaded (dans la table order) dans une table secondaire
+- créer un order a un instant T pour les users
+- création d'un panier de plusieurs de filtres.
+- réactivité du filtre en fonction du son 
+- réactivité du filtre à l'aide d'un thérémine 
+
