@@ -128,7 +128,7 @@ DFS24A :
 👉 Plus d'infos dans notre magnifique documentation qui se compose 👈 :
 + d'un [Manuel d'utilisation 📜](./documentation/notice-utilisateur/documentation_utilisateur.pdf) : le nécessaire pour exécuter l'app pas à pas 👣
 
-+ et d'un [Slide de présentation 📽](./documentation/slide-presentation/VJIT_Visual-Tacos.pdf) : si on ne vous a pas encore convaincus d'emmener VJ'IT avec vous à la prochaine  soirée 🕺🪩
++ et d'un [Slide de présentation 📽](./documentation/slide-presentation/VJIT_Visual-Tacos.pdf) : si on ne vous a pas encore convaincu d'emmener VJ'IT avec vous à la prochaine  soirée 🕺🪩
 
 
 ---
