@@ -12,7 +12,7 @@
 
 ---
 
-📝 NOTE : Ce repository est la suite de [celui-ci](https://github.com/Mow69/capture-video) qui a servi de commencement.
+📝 NOTE : Ce repository est la suite de [celui-ci](https://github.com/Mow69/capture-video) qui a servi pour commencer.
 
 ---
 
@@ -51,15 +51,15 @@ Balance tes filtres sur la foule dansante sur le rythme endiablé des meilleurs 
 Liste des technologies et outils employés dans votre projet
 
 - <b>Technologies :</b>
-    - Front-end mobile:
+    - Front-end mobile :
         - Dart
         - Flutter     
-    - Back-end
+    - Back-end :
         - MariaDB
         - TypeScrypt
         - NestJs
         - npm
-    - Raspberry Pi
+    - Raspberry Pi (partie IoT) :
         - Python 3
         - pip 3 
         - Blue Dot pour la connexion Bluetooth   
@@ -125,28 +125,34 @@ DFS24A :
 
 [Lien vers la video de la demonstration](https://youtu.be/iZ2nCDYJfRk) 
 
+👉 Plus d'infos dans notre magnifique documentation qui se compose 👈 :
++ d'un [Manuel d'utilisation 📜](./documentation/notice-utilisateur/documentation_utilisateur.pdf) : le nécessaire pour exécuter l'app pas à pas 👣
+
++ et d'un [Slide de présentation 📽](./documentation/slide-presentation/VJIT_Visual-Tacos.pdf) : si on ne vous a pas encore convaincu d'emmener VJ'IT avec vous à la prochaine  soirée 🕺🪩
+
+
 ---
 
 ## <img src="./images/vjing-logo-seul.png" alt="vjing-logo-seul" width="15"/> Angle d'amélioration
 
-La réalisation du projet a été pensé afin de facilité les améliorations futures. 
+La réalisation du projet a été pensée afin de faciliter les améliorations futures. 
 
-En vu d'une prochaine version nous prévoyons:
+En vue d'une prochaine version nous prévoyons:
 
-- la personnalisation de la liste des filtres par user
-- l'achat de filtres par stripe
-- optimisation de l'app sur IOS
-- automatisation de la connexion par Bluetooth au boitier VJIT
-- optimisation pleine écran automatique
-- optimisation de l'utilisation du boitier en mode one Screen
-- optimisation du lag de la video 
-- utilisation du produit en full hors ligne
-- double authentification par mail a la création du compte et au changement du mot de pass.
-- intégration continu de projet
-- adapter le code flutter pour le rafraichissement du token (déjà en place sur l'api cf: postman)
-- déplacement de l'attribut is_downloaded (dans la table order) dans une table secondaire
-- créer un order a un instant T pour les users
-- création d'un panier de plusieurs de filtres.
-- réactivité du filtre en fonction du son 
-- réactivité du filtre à l'aide d'un thérémine 
+- la personnalisation de la liste des filtres par utilisateur
+- l'achat de filtres par Stripe
+- optimisation de l'app sur iOS
+- automatisation de la connexion par Bluetooth au boitier VJ'IT
+- optimisation plein écran automatique
+- optimisation de l'utilisation du boîtier en mode "One Screen"
+- optimisation du lag de la vidéo 
+- utilisation du produit en "full" hors-ligne
+- double authentification par e-mail à la création du compte et au changement du mot de passe.
+- intégration continue du projet
+- adapter le code Flutter pour le rafraîchissement du token (déjà en place sur l'API, cf: le [fichier de collection Postman](./api/postman/VJing.postman_collection.json) joint au projet)
+- déplacement de l'attribut is_downloaded (dans la table Order des commandes) dans une table secondaire
+- créer une commande (order) à un instant T pour les utilisateurs
+- création d'un panier de plusieurs filtres.
+- réactivité du filtre en fonction du son (comme un ["vizualizer"](https://en.wikipedia.org/wiki/Music_visualization))
+- réactivité du filtre à l'aide d'un thérémine (ajout de son 🎵 à la détection de mouvement à la caméra)
 
