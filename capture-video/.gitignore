@@ -1,6 +1,8 @@
-# Folder
-assets/*
 
+# Folder
+filter/*
+assets/*
+old-filter/*
 # Python
 __pycache__
 
@@ -10,7 +12,3 @@ __pycache__
 http-request.http
 schema.graphql
 .graphqlconfig
-
-# Mac OS
-.DS_Store
-

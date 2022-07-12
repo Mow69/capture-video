@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import './connectionState.dart' as cs;
 
 class LoginPage extends StatefulWidget {
@@ -131,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
 
                             Uri url = Uri.parse(
-                                'http://10.0.2.2:3000/api/auth/login');
+                                'http://164.92.201.208:3000/api/auth/login');
                             Object data = {
                               "email": _login,
                               "password": _password,
@@ -159,6 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                               }
                               print('Response status: ${response.statusCode}');
                               print('Response body: ${response.body}');
+                              _showSuccess(context);
                             } catch (e) {
                               _showError(context, e.toString());
                             }
@@ -190,5 +189,26 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  static void _showSuccess(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Succès'),
+            content: Text('Connection établie'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Supper !'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // go to home
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
+            ],
+          );
+        });
   }
 }

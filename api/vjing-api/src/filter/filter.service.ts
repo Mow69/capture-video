@@ -35,18 +35,33 @@ export class FilterService {
     
   }
 
-  findAll() {
-    return this.filterRepository.find({ relations: ['category','video_ext'] });
+  async findAll() {
+    // return this.filterRepository.find({ relations: ['category','video_ext'] });
+    return await this.filterRepository.createQueryBuilder("filter")
+      .leftJoinAndSelect("filter.category", "category")
+      .leftJoinAndSelect("filter.video_ext", "video_ext")
+      .select([
+        "filter.*",
+        "category.name AS category_name",
+        "video_ext.name AS video_ext_name",
+      ])
+      .execute();
   }
 
-  findOne(id: number) {
-    return this.filterRepository.findOneBy({ id }).then((user) => {
-      if(!user){
+  async findOne(filterId: number) {
+    return this.filterRepository.findOne({
+      where: { 
+          id: filterId
+      },
+      relations: ["category","video_ext"],
+    }).then((filter) => {
+      if(!filter){
         throw new NotFoundException('Id not found');
       }
-      return user
-		});
+      return filter
+    });
   }
+  
   async delete(res: Response,id: number){
     const filter = await this.findOne(id)
     await this.filterRepository.remove(filter);

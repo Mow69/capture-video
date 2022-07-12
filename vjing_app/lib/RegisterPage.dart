@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
 
                             Uri url = Uri.parse(
-                                'http://10.0.2.2:3000/api/auth/register');
+                                'http://164.92.201.208:3000/api/auth/register');
                             Object data = {
                               "email": _email,
                               "password": _password,
@@ -250,12 +250,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 _showError(context, msg);
                               } else {
                                 print('Registration success');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
-                                  ),
-                                );
+                                _showSuccess(context);
                               }
                             } catch (e) {
                               _showError(context, e.toString());
@@ -290,5 +285,30 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
     );
+  }
+  static void _showSuccess(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Succès'),
+            content: Text('Incription réussie'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cool !'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // go to home
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        });
   }
 }

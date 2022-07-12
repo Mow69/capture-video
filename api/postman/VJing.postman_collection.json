@@ -10,7 +10,97 @@
 			"name": "Auth",
 			"item": [
 				{
+					"name": "Token",
+					"item": [
+						{
+							"name": "Get Token",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/token",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json(),\r",
+											"savedData = JSON.stringify(response);\r",
+											"if(response['access_token'] && response['expires_in']){\r",
+											"    let expires_in = parseInt(response['expires_in'])\r",
+											"    pm.collectionVariables.set(\"access_token\", response['access_token']);\r",
+											"    pm.collectionVariables.set(\"expires_in\", expires_in);\r",
+											"    var expiryHalf = expires_in/2;\r",
+											"    var expiryDateHalf = new Date();\r",
+											"    expiryDateHalf.setSeconds(expiryDateHalf.getSeconds() + expiryHalf);\r",
+											"\r",
+											"    console.log(\"new expiration date:\"+expiryDateHalf)\r",
+											"    pm.collectionVariables.set(\"access_token_expire_date_half\", expiryDateHalf);\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/token/refresh",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"token",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json(),\r",
+									"savedData = JSON.stringify(response);\r",
+									"if(response['access_token'] && response['expires_in']){\r",
+									"    let expires_in = parseInt(response['expires_in'])\r",
+									"    pm.collectionVariables.set(\"access_token\", response['access_token']);\r",
+									"    pm.collectionVariables.set(\"expires_in\", expires_in);\r",
+									"    var expiryHalf = expires_in/2;\r",
+									"    var expiryDateHalf = new Date();\r",
+									"    expiryDateHalf.setSeconds(expiryDateHalf.getSeconds() + expiryHalf);\r",
+									"\r",
+									"    console.log(\"new expiration date:\"+expiryDateHalf)\r",
+									"    pm.collectionVariables.set(\"access_token_expire_date_half\", expiryDateHalf);\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -30,14 +120,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/login",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"auth",
 								"login"
 							]
@@ -86,16 +173,45 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/auth/register",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/auth/register",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"auth",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"access_token\", null);\r",
+									"pm.collectionVariables.set(\"access_token_expire_date_half\", null);\r",
+									"pm.collectionVariables.set(\"expires_in\", null);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
 							]
 						}
 					},
@@ -109,33 +225,14 @@
 				{
 					"name": "GetProfile",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJfbmFtZSI6ImpvaG4iLCJpYXQiOjE2NTY1ODM0NTksImV4cCI6MTY1NjU4NzA1OSwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.gEqcMCueoSOgLS40LVTI83f9rPPl-tsJk4s8X1lfuLU",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJzdWIiOjEsImlhdCI6MTY1NjUyMDAxMSwiZXhwIjoxNjU2NTIwMDE0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdCJ9.HNQchIkRw9N2j7aDsPrwZ2PvVC7LvJeJ6gUaK3Dkyl8\"",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/user/profile",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user/profile",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"user",
 								"profile"
 							]
@@ -149,14 +246,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/user/1/userjson",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user/1/userjson",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"user",
 								"1",
 								"userjson"
@@ -171,14 +265,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/user/1/userjson/downloaded",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/user/1/userjson/downloaded",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"user",
 								"1",
 								"userjson",
@@ -199,14 +290,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/users",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/users",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"users"
 							]
 						}
@@ -219,14 +307,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/users/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/users/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"users",
 								"1"
 							]
@@ -251,14 +336,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/11",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/users/11",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"users",
 								"11"
 							],
@@ -284,11 +366,12 @@
 								{
 									"key": "email",
 									"value": "testte1fd@sgdfhgfhgfst.frfjjj",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "password",
-									"value": "mdpquicangeTout1",
+									"value": "mdpquicangeTout3",
 									"type": "text"
 								},
 								{
@@ -305,18 +388,20 @@
 									"key": "username",
 									"value": "picklesrick",
 									"type": "text"
+								},
+								{
+									"key": "repeat_password",
+									"value": "mdpquicangeTout3",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/users/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"users",
 								"1"
 							]
@@ -375,14 +460,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/filter",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/filter",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"filter"
 							]
 						}
@@ -395,14 +477,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/filter",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/filter",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"filter"
 							]
 						}
@@ -415,14 +494,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/filter/9",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/filter/9",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"filter",
 								"9"
 							]
@@ -457,14 +533,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/filter/22",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/filter/22",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"filter",
 								"22"
 							]
@@ -478,14 +551,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/filter/20",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/filter/20",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"filter",
 								"20"
 							]
@@ -534,14 +604,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/order",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/order",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"order"
 							]
 						}
@@ -554,14 +621,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/order",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/order",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"order"
 							]
 						}
@@ -574,14 +638,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/order/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/order/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"order",
 								"1"
 							]
@@ -617,14 +678,11 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/order/1",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/order/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"order",
 								"1"
 							]
@@ -638,14 +696,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/order/2",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/order/2",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
 								"order",
 								"2"
 							]
@@ -654,6 +709,113 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const echoPostRequest = {",
+					"  url:  pm.collectionVariables.get('baseUrl')+'/auth/token/refresh',",
+					"  method: 'GET',",
+					"  header: {",
+					"        'content-type': 'application/json',",
+					"        'Authorization': 'Bearer '+pm.collectionVariables.get('access_token')",
+					"    },",
+					"  body: {",
+					"    mode: 'urlencoded',",
+					"    urlencoded: [",
+					"        { key: \"access_token\", value: pm.collectionVariables.get('access_token') },",
+					"    ]",
+					"  }",
+					"};",
+					"",
+					"let getToken = false;",
+					"let access_token = pm.collectionVariables.get('access_token');",
+					"let access_token_expiry = new Date(pm.collectionVariables.get('access_token_expire_date_half'));",
+					"console.log(new Date())",
+					"console.log(access_token_expiry)",
+					"",
+					"if(!access_token || !access_token_expiry){",
+					"    console.log('Token and refresh Token invalid, go in /auth/login for connect');",
+					"    return;",
+					"}",
+					"if (new Date().getTime() >= access_token_expiry.getTime()) {",
+					"    console.log('Token is half expired')",
+					"}else{",
+					"    getToken = true",
+					"    console.log('Token is valid');",
+					"    console.log('Token: ', access_token);",
+					"    console.log('Expiry (UNIX epoch): ', access_token_expiry.getTime());",
+					"    console.log('Expiry date: ', access_token_expiry);",
+					"    return;",
+					"}",
+					"",
+					"if (getToken === false) {",
+					"    pm.sendRequest(echoPostRequest, function (err, res) {",
+					"        console.log(err ? err : res.json());",
+					"        if (err === null) {",
+					"            console.log('Saving the token and expires_in')",
+					"            var response = res.json();",
+					"            let expires_in = parseInt(response['expires_in']);",
+					"            pm.collectionVariables.set('access_token', response['access_token']);",
+					"            pm.collectionVariables.set('expires_in',expires_in);",
+					"",
+					"            var expiryHalf = expires_in/2;",
+					"            var expiryDateHalf = new Date();",
+					"            ",
+					"            expiryDateHalf.setSeconds(expiryDateHalf.getSeconds() + expiryHalf);",
+					"",
+					"            console.log(\"refresh token at: \"+expiryDateHalf)",
+					"            pm.collectionVariables.set(\"access_token_expire_date_half\", expiryDateHalf);",
+					"        }",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "expires_in",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token_expire_date_half",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
